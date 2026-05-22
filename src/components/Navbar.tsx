@@ -1,0 +1,208 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { useActiveSection } from "@/hooks/useActiveSection";
+import { useScrollProgress } from "@/hooks/useScrollProgress";
+import { scrollToSection } from "@/lib/utils";
+import { FiMenu, FiX } from "react-icons/fi";
+import logoImg from "@/assets/logo.png";
+
+const navLinks = [
+  { id: "about", label: "About" },
+  { id: "skills", label: "Skills" },
+  { id: "projects", label: "Projects" },
+  { id: "experience", label: "Experience" },
+  { id: "services", label: "Services" },
+  { id: "contact", label: "Contact" },
+];
+
+export default function Navbar() {
+  const activeSection = useActiveSection();
+  const { isScrolled } = useScrollProgress();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Close mobile menu on resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) setMobileOpen(false);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const handleNavClick = (id: string) => {
+    setMobileOpen(false);
+    scrollToSection(id);
+  };
+
+  return (
+    <>
+      <motion.nav
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed top-0 left-0 right-0 z-40 w-full flex justify-center pointer-events-none transition-all duration-500"
+        style={{
+          paddingTop: isScrolled ? "16px" : "32px",
+        }}
+      >
+        <div className="w-full max-w-[1420px] px-6 md:px-10 lg:px-12 pointer-events-auto">
+          <div
+            className="w-full rounded-[24px] border transition-all duration-500 px-8 md:px-10 lg:px-12"
+            style={{
+              background: isScrolled
+                ? "rgba(10, 10, 15, 0.88)"
+                : "rgba(10, 10, 15, 0.5)",
+              backdropFilter: "blur(28px)",
+              WebkitBackdropFilter: "blur(28px)",
+              borderColor: isScrolled
+                ? "rgba(255, 255, 255, 0.08)"
+                : "rgba(255, 255, 255, 0.04)",
+              boxShadow: isScrolled
+                ? "0 20px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.03)"
+                : "0 10px 30px -10px rgba(0, 0, 0, 0.3)",
+            }}
+          >
+            <div className="flex items-center justify-between h-22 md:h-26">
+              {/* Logo / Name */}
+              <button
+                onClick={() => handleNavClick("hero")}
+                className="group flex items-center gap-4 text-left"
+              >
+                <div className="relative w-11 h-11 transition-all duration-500 group-hover:scale-105 group-hover:rotate-3">
+                  <Image
+                    src={logoImg}
+                    alt="Kurt Yermo Logo"
+                    fill
+                    sizes="44px"
+                    className="object-contain"
+                    priority
+                  />
+                </div>
+                <span className="font-bold text-white font-display text-lg tracking-tight group-hover:text-accent transition-colors duration-300">
+                  Kurt<span className="text-accent-light">Yermo</span>
+                  <span className="text-accent font-extrabold">.</span>
+                </span>
+              </button>
+
+              {/* Desktop Nav */}
+              <div className="hidden md:flex items-center gap-1.5 lg:gap-2.5">
+                {navLinks.map(({ id, label }) => {
+                  const isActive = activeSection === id;
+                  return (
+                    <button
+                      key={id}
+                      onClick={() => handleNavClick(id)}
+                      className={`
+                        relative h-9 px-4 inline-flex items-center justify-center text-[11px] lg:text-[12px] font-semibold tracking-[0.14em] uppercase rounded-[14px] transition-all duration-300
+                        ${
+                          isActive
+                            ? "text-accent"
+                            : "text-white/60 hover:text-white hover:bg-white/4"
+                        }
+                      `}
+                    >
+                      <span className="relative z-10">{label}</span>
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeNavIndicator"
+                          className="absolute inset-0 bg-accent/8 border border-accent/20 rounded-[14px] pointer-events-none shadow-[0_0_25px_rgba(59,130,246,0.12)]"
+                          transition={{ type: "spring", stiffness: 350, damping: 26 }}
+                        />
+                      )}
+                    </button>
+                  );
+                })}
+
+                <button
+                  onClick={() => handleNavClick("contact")}
+                  className="ml-3 lg:ml-5 h-10 px-5 text-[11px] lg:text-[12px] font-bold tracking-[0.14em] uppercase border border-accent/40 bg-accent/8 text-accent rounded-[14px] hover:bg-accent hover:text-white transition-all duration-300 hover:-translate-y-0.5 shadow-[0_0_15px_rgba(59,130,246,0.12)] hover:shadow-[0_0_25px_rgba(59,130,246,0.4)] whitespace-nowrap"
+                >
+                  Hire Me
+                </button>
+              </div>
+
+              {/* Mobile Menu Button */}
+              <button
+                className="md:hidden text-white/70 hover:text-white hover:bg-white/5 transition-all p-3 rounded-2xl border border-transparent hover:border-white/10"
+                onClick={() => setMobileOpen((prev) => !prev)}
+                aria-label="Toggle menu"
+              >
+                {mobileOpen ? <FiX size={22} /> : <FiMenu size={22} />}
+              </button>
+            </div>
+          </div>
+        </div>
+      </motion.nav>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm"
+              onClick={() => setMobileOpen(false)}
+            />
+            <motion.div
+              initial={{ x: "100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "100%", opacity: 0 }}
+              transition={{ type: "spring", stiffness: 350, damping: 30 }}
+              className="fixed right-4 top-4 bottom-4 z-40 w-[calc(100vw-32px)] max-w-[340px] rounded-2xl flex flex-col pt-24 px-8 pb-8 glass-strong shadow-2xl"
+              style={{
+                background: "rgba(17, 17, 32, 0.95)",
+                borderColor: "rgba(255, 255, 255, 0.08)",
+                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.04)",
+              }}
+            >
+              {/* Drawer header close button */}
+              <button
+                className="absolute top-6 right-6 text-white/70 hover:text-white p-2 hover:bg-white/5 rounded-xl transition-all"
+                onClick={() => setMobileOpen(false)}
+                aria-label="Close menu"
+              >
+                <FiX size={20} />
+              </button>
+
+              <div className="flex flex-col gap-3 mt-4">
+                {navLinks.map(({ id, label }, i) => (
+                  <motion.button
+                    key={id}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    onClick={() => handleNavClick(id)}
+                    className={`
+                      text-left px-5 py-3.5 rounded-[14px] text-xs font-bold tracking-wider uppercase transition-all duration-300 border border-transparent
+                      ${
+                        activeSection === id
+                          ? "bg-accent/10 text-accent border border-accent/20 shadow-[0_0_15px_rgba(59,130,246,0.06)]"
+                          : "text-white/70 hover:text-white hover:bg-white/4"
+                      }
+                    `}
+                  >
+                    {label}
+                  </motion.button>
+                ))}
+                <motion.button
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: navLinks.length * 0.05 }}
+                  onClick={() => handleNavClick("contact")}
+                  className="mt-6 px-5 py-4 bg-accent text-white font-bold tracking-[0.12em] uppercase rounded-[14px] hover:bg-accent-dark transition-all duration-300 text-center shadow-lg hover:shadow-xl hover:shadow-accent/20 hover:-translate-y-0.5"
+                >
+                  Hire Me
+                </motion.button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
