@@ -151,49 +151,56 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Right Column - Visual Profile Card */}
+          {/* Right Column - Visual Profile Card Composition */}
           <motion.div
             variants={scaleIn}
-            className="relative flex items-center justify-center lg:justify-end"
+            className="relative flex items-center justify-center lg:justify-end w-full"
           >
-            {/* Ambient Background Glow behind Card */}
+            {/* Ambient Background Glow behind Card (Stunning original 2nd screenshot glow) */}
             <div className="absolute -inset-4 bg-gradient-to-tr from-[#38bdf8] via-[#3b82f6] to-[#6366f1] rounded-[30px] opacity-15 blur-2xl z-0 pointer-events-none" />
 
-            {/* Main Card Frame */}
-            <div className="relative w-full max-w-[330px] sm:max-w-[360px] aspect-[4/5] rounded-[24px] overflow-hidden border border-white/10 p-3 bg-surface-card/40 backdrop-blur-md z-10">
-              {/* Backing Gradient Frame */}
-              <div className="relative w-full h-full rounded-[18px] overflow-hidden bg-gradient-to-tr from-[#38bdf8] via-[#3b82f6] to-[#6366f1] p-[2px]">
-                {/* Inner Image Container */}
-                <div className="relative w-full h-full rounded-[16px] overflow-hidden bg-background">
-                  <Image
-                    src={profileImg}
-                    alt="Kurt Yermo"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 360px"
-                    className="object-cover object-center grayscale hover:grayscale-0 transition-all duration-700 scale-102 hover:scale-105"
-                    priority
-                  />
+            {/* Sizing Anchor Wrapper Frame */}
+            <div className="relative w-full max-w-[320px] sm:max-w-[350px] flex flex-col items-center lg:block z-10">
+              
+              {/* Main Portrait Frame with original backing gradient glowing border */}
+              <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden bg-surface-card/40 backdrop-blur-md border border-white/10 p-3 z-10 shadow-[0_15px_40px_rgba(0,0,0,0.5)] select-none">
+                <div className="relative w-full h-full rounded-[18px] overflow-hidden bg-gradient-to-tr from-[#38bdf8] via-[#3b82f6] to-[#6366f1] p-[2px]">
+                  <div className="relative w-full h-full rounded-[16px] overflow-hidden bg-background">
+                    <Image
+                      src={profileImg}
+                      alt="Kurt Yermo"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 350px"
+                      className="object-cover object-center grayscale hover:grayscale-0 transition-all duration-1000 ease-[0.22,1,0.36,1] scale-101 hover:scale-103"
+                      priority
+                    />
+                  </div>
                 </div>
               </div>
 
-              {/* Floating glassmorphic info badge overlapping the bottom */}
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-[85%] sm:w-[90%] glass-strong p-3 rounded-[18px] border border-white/10 shadow-2xl flex items-center gap-3.5 hover:border-accent/30 transition-colors duration-300">
-                {/* Logo Emblem */}
-                <div className="relative w-8.5 h-8.5 rounded-[10px] bg-accent/10 border border-accent/20 flex items-center justify-center overflow-hidden shrink-0">
+              {/* Floating Identity Badge (Desktop: Bottom-Left offset / Mobile: Stacked center below) */}
+              <div className="
+                z-20 flex items-center gap-3.5 p-3.5 rounded-[16px] border border-white/10 shadow-2xl backdrop-blur-md text-left select-none
+                bg-white/[0.01] shadow-[0_20px_50px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.02)]
+                w-full max-w-[240px] mt-6 lg:mt-0 lg:absolute lg:bottom-[-20px] lg:left-[-32px] lg:w-[230px]
+                hover:border-accent/20 transition-colors duration-300
+              ">
+                {/* Mini Logo Emblem */}
+                <div className="relative w-7 h-7 rounded-[8px] bg-accent/10 border border-accent/20 flex items-center justify-center overflow-hidden shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
                   <Image
                     src={logoImg}
                     alt="Kurt Yermo"
-                    width={18}
-                    height={18}
+                    width={14}
+                    height={14}
                     className="object-contain"
                   />
                 </div>
-                {/* Text info */}
+                {/* Signature info */}
                 <div className="flex flex-col text-left">
-                  <span className="font-bold text-white text-[12px] tracking-tight leading-none">
+                  <span className="font-bold text-white text-[11.5px] tracking-tight leading-none">
                     Kurt Yermo
                   </span>
-                  <span className="text-[8px] text-accent-light font-bold tracking-wider uppercase mt-1">
+                  <span className="text-[7.5px] text-accent-light font-extrabold tracking-[0.12em] uppercase mt-1">
                     Creative Technologist
                   </span>
                 </div>
