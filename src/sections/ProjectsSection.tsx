@@ -9,7 +9,7 @@ import ProjectCard from "@/components/ProjectCard";
 import ProjectModal from "@/components/ProjectModal";
 import { projects, Project } from "@/data/projects";
 
-const categories = ["All", "Frontend", "Full Stack", "Web App"];
+const categories = ["All", "Frontend Only", "Full Stack", "Localhost Application"];
 
 export default function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -22,7 +22,7 @@ export default function ProjectsSection() {
   }, [activeFilter]);
 
   return (
-    <section id="projects" className="relative section-padding scroll-mt-[60px]">
+    <section id="projects" className="relative section-padding scroll-mt-20">
       {/* BG */}
       <div className="absolute inset-0 pointer-events-none">
         <div

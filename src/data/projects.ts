@@ -1,7 +1,7 @@
 export interface ProjectAction {
   label: string;
   type: "gallery" | "paper" | "github" | "demo" | "external";
-  url?: string; // Optional depending on type
+  url?: string;
 }
 
 export interface Project {
@@ -30,29 +30,27 @@ export const projects: Project[] = [
     id: "sfs50",
     title: "SFS50 Donation Management System",
     shortDescription:
-      "A local donation management platform streamlining donor records, inventory management, and administrative reporting for organizations.",
+      "A local donation management platform streamlining donor records, inventory tracking, and transparent administrative reporting.",
     overview:
-      "SFS50 is a comprehensive local donation management system built to help non-profit organizations efficiently manage donor information, track monetary and in-kind contributions, generate reports, and maintain transparent records. The system focuses on organizational workflows and management efficiency.",
-    technologies: ["PHP", "MySQL", "JavaScript", "HTML", "CSS", "Bootstrap"],
-    category: ["Full Stack", "Web App"],
+      "SFS50 is a comprehensive donation management platform built to help local organizations coordinate donor intelligence, track financial and in-kind items, and generate structural financial transparency reports. The system is engineered to streamline record-keeping and optimize local management workflows.",
+    technologies: ["PHP", "MySQL", "JavaScript", "HTML5", "CSS3", "Bootstrap"],
+    category: ["Full Stack", "Localhost Application"],
     featuredImage: "/projects/sfs50.png",
     galleryImages: [
-      "/projects/sfs50.png",
-      "/projects/sfs50-dashboard.png",
-      "/projects/sfs50-inventory.png"
+      "/projects/sfs50.png"
     ],
-    researchPaperUrl: "/projects/sfs50-paper.pdf",
+    researchPaperUrl: "https://drive.google.com/file/d/17D2hwMwn2uEI9SA05dGLU-qxu1h4Ldvo/view?usp=drive_link",
     process:
-      "The development began with requirements gathering from non-profit stakeholders. Database schemas were designed to model donor records and contribution history. The frontend was iteratively designed with usability as a priority, focusing on dashboard efficiency and clean data visualization.",
+      "The architecture was initiated by gathering field workflow specifications. Database tables were normalized to log financial history with zero collision risks. The frontend interface was designed with a heavy emphasis on form layouts, clean administrative summaries, and fast query execution times.",
     challenges:
-      "One of the main challenges was designing a role-based access control system that balanced security with ease of use for non-technical administrators. Optimizing local database queries for generating large financial reports was also a significant technical hurdle.",
+      "Developing a rigid role-based access control paradigm that maintained high usability for non-technical users was a key challenge. Optimizing localized SQL aggregate queries for generating rapid ledger balances was also resolved via comprehensive database indexing.",
     uiuxApproach:
-      "The UI prioritizes clarity and efficiency — administrators need to find donor records and generate reports quickly. Clean data tables, intuitive filtering, and a consistent navigation structure were central to the design decisions.",
+      "The interface focuses on typographic scanability and rapid data entries. Clean financial ledgers, dense administrative filtering grids, and robust structural tables ensure that coordinators can locate specific profiles and audit contribution history with minimal friction.",
     completionDate: "2024",
     featured: true,
     status: "completed",
     actions: [
-      { label: "Research Paper", type: "paper", url: "/projects/sfs50-paper.pdf" },
+      { label: "Documentation", type: "paper", url: "https://drive.google.com/file/d/17D2hwMwn2uEI9SA05dGLU-qxu1h4Ldvo/view?usp=drive_link" },
       { label: "System Screenshots", type: "gallery" }
     ],
   },
@@ -60,61 +58,60 @@ export const projects: Project[] = [
     id: "motowatch",
     title: "MotoWatch: AI-Powered Evolution",
     shortDescription:
-      "An AI-Powered Evolution of the SFS50 System featuring intelligent recommendations, automated workflows, and modernized dashboards.",
+      "An AI-assisted tracking evolution of SFS50 featuring automated recommendation engines, predictive modeling, and modernized dashboards.",
     overview:
-      "MotoWatch represents the intelligent leap forward from the SFS50 ecosystem. It integrates AI-assisted workflows and automation systems to dramatically reduce manual data entry. By analyzing patterns, it provides intelligent recommendations and creates a highly modernized, efficiency-driven dashboard experience.",
+      "MotoWatch represents the intelligent next-generation step from the SFS50 foundation. It introduces machine learning components to automate asset prediction, minimize repetitive data logging, and represent trends inside a highly modern, cinematic dashboard structure.",
     technologies: ["React", "Python", "TensorFlow", "Node.js", "PostgreSQL"],
-    category: ["AI", "Full Stack", "Web App"],
-    featuredImage: "/projects/motowatch.png",
+    category: ["Full Stack", "Localhost Application"],
+    featuredImage: "/projects/motowatch1.png",
     galleryImages: [
-      "/projects/motowatch.png",
-      "/projects/motowatch-ai.png"
+      "/projects/motowatch1.png",
+      "/projects/motowatch2.png"
     ],
-    researchPaperUrl: "/projects/motowatch-paper.pdf",
+    researchPaperUrl: "https://drive.google.com/file/d/1tN_PL1pC3WBeskGTdfu0xVzHtZ7uo9yA/view?usp=drive_link",
     process:
-      "The architecture was split into a machine learning microservice and a responsive frontend dashboard. Models were trained to identify patterns in organizational workflows, which were then exposed via a REST API to populate the highly interactive React frontend.",
+      "The system splits predictive intelligence into a lightweight Python microservice, exposing REST end-points to feed a fast-rendering React client. Models analyze operational data to suggest optimized stock assignments and identify anomalies dynamically.",
     challenges:
-      "Integrating Python-based AI models into a real-time web application required careful orchestration. Ensuring the intelligent recommendations felt helpful rather than intrusive demanded numerous UI iterations and user testing sessions.",
+      "Synchronizing real-time predictive predictions with local user states required creating highly resilient API integrations. Striking the right balance to make machine learning alerts feel non-intrusive required multiple rounds of design iterations.",
     uiuxApproach:
-      "The design language feels intelligent, modern, and advanced. Subtle animations draw attention to AI-generated insights, while the core workflow remains unobstructed. Dark mode was utilized to create a sleek, futuristic aesthetic.",
+      "Adopts a deeply technical, dark editorial aesthetic. Soft visual glow boundaries emphasize automated notifications, while standard analytical charts and statistics represent key information clearly and efficiently.",
     completionDate: "2025",
     featured: true,
     status: "completed",
     actions: [
-      { label: "AI Workflow", type: "gallery" },
-      { label: "Technical Breakdown", type: "gallery" },
-      { label: "Research Paper", type: "paper", url: "/projects/motowatch-paper.pdf" }
+      { label: "Documentation", type: "paper", url: "https://drive.google.com/file/d/1tN_PL1pC3WBeskGTdfu0xVzHtZ7uo9yA/view?usp=drive_link" },
+      { label: "System Screenshots", type: "gallery" }
     ],
   },
   {
     id: "postpal",
     title: "PostPal Discussion Platform",
     shortDescription:
-      "A modern social discussion platform inspired by Reddit, featuring threaded discussions, a responsive feed system, and premium interaction design.",
+      "A modern social discussion client featuring infinite nested comment threads, optimistic UI states, and recursive frontend rendering systems.",
     overview:
-      "PostPal is a community-driven platform designed around threaded conversations and content discovery. It features a robust responsive feed system, complex user interactions (upvotes, nesting, awards), and a highly polished UI/UX that feels both familiar and distinctly premium.",
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "PostgreSQL"],
-    category: ["Frontend", "Full Stack", "Social"],
-    githubUrl: "https://github.com/yermokurt/postpal",
-    featuredImage: "/projects/postpal.png",
+      "PostPal is a community-driven discussion frontend designed around threaded conversations, content discovery, and elegant client state operations. It features a fully responsive feed layout, complex interactive mechanics (such as nested threaded comments, dynamic sorting, and mock upvote/downvote operations), and a highly polished dark-theme interaction model.",
+    technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Mock JSON DB", "REST API Client"],
+    category: ["Frontend Only"],
+    featuredImage: "/projects/PostPal1.png",
     galleryImages: [
-      "/projects/postpal.png",
-      "/projects/postpal-feed.png",
-      "/projects/postpal-thread.png"
+      "/projects/PostPal1.png",
+      "/projects/postpal2.png"
     ],
+    githubUrl: "https://github.com/yermokurt/ITELECT3_finals_json",
+    researchPaperUrl: "https://drive.google.com/file/d/1eU5Bipz6BKamM7-Gs9fx3yhzhjsv62v8/view?usp=drive_link",
     process:
-      "Starting with a complex relational database design for threaded comments, the backend was built with Prisma. The frontend utilized Next.js Server Components to render deep comment trees efficiently before pushing interactive states to client components.",
+      "Built strictly as a highly responsive client-side showcase, the application utilizes highly optimized state models to handle deeply nested threaded comment trees. The UI coordinates with a local JSON-driven data mockup file to simulate real-time backend updates and optimistic local caching, delivering a seamless social interface.",
     challenges:
-      "Rendering infinitely nested comment threads without performance degradation required recursive component patterns and virtualization. State management for optimistic UI updates (like immediate upvote feedback) was complex but critical for a premium feel.",
+      "Optimizing recursive renderings for infinite nested comment threads in pure React without layout jumps or lag was a major technical focus. This was solved by designing flat comment schemas with depth keys, utilizing virtualization patterns, and integrating Framer Motion layout transitions for an extremely organic feel.",
     uiuxApproach:
-      "The focus was on readability and interaction fluidity. Modern social media layouts were employed, utilizing responsive feed cards, smooth micro-interactions, and clear visual hierarchy to ensure content remains the star of the application.",
+      "Every gesture and micro-interaction is calibrated to look premium and responsive. High-performance dark layout schemas, subtle glassmorphic indicators, smooth thread collapsible guidelines, and tactile upvote/downvote transitions keep focus on the readability of the discussion cards.",
     completionDate: "2025",
     featured: true,
     status: "completed",
     actions: [
-      { label: "Platform Overview", type: "gallery" },
-      { label: "UI Showcase", type: "gallery" },
-      { label: "GitHub Repository", type: "github", url: "https://github.com/yermokurt/postpal" }
+      { label: "GitHub Repository", type: "github", url: "https://github.com/yermokurt/ITELECT3_finals_json" },
+      { label: "Documentation", type: "paper", url: "https://drive.google.com/file/d/1eU5Bipz6BKamM7-Gs9fx3yhzhjsv62v8/view?usp=drive_link" },
+      { label: "System Screenshots", type: "gallery" }
     ],
   },
 ];

@@ -147,23 +147,17 @@
 
   .section-padding {
     padding-top: 2rem;
-    /* 48px */
-    padding-bottom: 4rem;
+    /* 40px */
+    padding-bottom: 5rem;
+    /* 80px */
   }
 
   @media (min-width: 768px) {
     .section-padding {
-      padding-top: 2rem;
-      /* 56px */
-      padding-bottom: 5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .section-padding {
       padding-top: 1rem;
-      /* 64px - Tighter elegant gap below navbar */
-      padding-bottom: 7rem;
+      /* 48px */
+      padding-bottom: 6rem;
+      /* 96px - Standard premium gap */
     }
   }
 

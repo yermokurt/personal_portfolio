@@ -39,7 +39,8 @@ export default function PdfViewerModal({ pdfUrl, isOpen, onClose }: PdfViewerMod
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-70 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 md:p-8"
+          className="fixed inset-0 z-[1100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 md:p-8"
+          data-lenis-prevent
         >
           <div className="relative w-full max-w-5xl h-[90vh] flex flex-col bg-surface rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
             {/* Toolbar */}

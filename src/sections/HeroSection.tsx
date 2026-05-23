@@ -13,7 +13,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-[85vh] lg:min-h-screen flex flex-col justify-center overflow-hidden scroll-mt-[60px] pt-20 pb-12 lg:pt-24 lg:pb-16 z-10"
+      className="relative min-h-[85vh] lg:min-h-screen flex flex-col justify-center overflow-hidden scroll-mt-20 pt-20 pb-12 lg:pt-24 lg:pb-16 z-10"
     >
       {/* Background Layer */}
       <div className="absolute inset-0 z-0">

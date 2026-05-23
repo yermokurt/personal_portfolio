@@ -31,7 +31,7 @@ const typeLabel = {
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="relative section-padding scroll-mt-[60px]">
+    <section id="experience" className="relative section-padding scroll-mt-20">
       {/* BG */}
       <div className="absolute inset-0 pointer-events-none">
         <div

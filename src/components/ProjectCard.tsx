@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { FiGithub, FiExternalLink, FiArrowRight } from "react-icons/fi";
 import { Project } from "@/data/projects";
-import { cardHover } from "@/animations/variants";
 import { cn } from "@/lib/utils";
 
 interface ProjectCardProps {
@@ -19,48 +18,53 @@ export default function ProjectCard({ project, onOpenModal, index = 0 }: Project
 
   return (
     <motion.div
-      initial="rest"
-      animate={hovered ? "hover" : "rest"}
-      variants={cardHover}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: index * 0.05 }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
       onClick={() => onOpenModal(project)}
       className={cn(
         "group relative rounded-2xl overflow-hidden cursor-pointer",
-        "border border-white/6 glass",
-        "flex flex-col h-full",
-        "transition-all duration-500"
+        "border transition-all duration-500",
+        "flex flex-col h-full bg-[#111120]/20"
       )}
       style={{
+        borderColor: hovered ? "rgba(59, 130, 246, 0.25)" : "rgba(255, 255, 255, 0.04)",
+        transform: hovered ? "translateY(-4px)" : "translateY(0px)",
         boxShadow: hovered
-          ? "0 12px 30px rgba(0,0,0,0.4), 0 0 0 1px rgba(59, 130, 246, 0.15)"
-          : "0 4px 20px rgba(0,0,0,0.25), 0 0 0 1px rgba(255, 255, 255, 0.03)",
+          ? "0 15px 40px -15px rgba(0,0,0,0.5), 0 0 25px -5px rgba(59, 130, 246, 0.15)"
+          : "0 8px 30px -20px rgba(0,0,0,0.3)",
       }}
     >
-      {/* Image */}
-      <div className="relative h-52 w-full overflow-hidden">
+      {/* Cinematic Image Frame */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
         <Image
           src={project.featuredImage}
           alt={project.title}
           fill
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-cover transition-transform duration-1000 ease-[0.22,1,0.36,1]"
+          style={{
+            transform: hovered ? "scale(1.03)" : "scale(1.00)",
+          }}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-        {/* Overlay */}
+        {/* Cinematic gradient vignette */}
         <div
           className={cn(
-            "absolute inset-0 bg-linear-to-t from-background via-background/60 to-transparent",
+            "absolute inset-0 bg-linear-to-t from-[#0a0a0f] via-[#0a0a0f]/40 to-transparent",
             "transition-opacity duration-500",
-            hovered ? "opacity-90" : "opacity-60"
+            hovered ? "opacity-95" : "opacity-80"
           )}
         />
 
-        {/* Top badges */}
-        <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+        {/* Categories over image overlay */}
+        <div className="absolute top-4 left-4 flex flex-wrap gap-1.5 select-none">
           {project.category.map((cat) => (
             <span
               key={cat}
-              className="px-4 py-1.5 min-h-[32px] text-[12px] font-medium leading-none inline-flex items-center tracking-widest uppercase bg-accent/20 text-accent border border-accent/20 rounded-[10px] backdrop-blur-sm"
+              className="px-3.5 py-1.5 rounded-[8px] text-[9px] tracking-[0.22em] font-extrabold uppercase bg-background/80 text-accent-light border border-white/5 backdrop-blur-md shadow-sm"
             >
               {cat}
             </span>
@@ -68,44 +72,44 @@ export default function ProjectCard({ project, onOpenModal, index = 0 }: Project
         </div>
       </div>
 
-      {/* Content */}
-      <div className="p-7 flex flex-col grow">
-        <h3 className="text-xl font-bold text-white mb-2 leading-tight group-hover:text-accent-light transition-colors duration-300">
+      {/* Narrative & Specifications Content */}
+      <div className="p-8 flex flex-col grow">
+        <h3 className="text-lg font-bold text-white mb-2 leading-tight group-hover:text-accent-light transition-colors duration-300">
           {project.title}
         </h3>
-        <p className="text-muted-light text-sm leading-relaxed mb-4 line-clamp-2">
+        <p className="text-muted text-xs leading-relaxed mb-6 line-clamp-2">
           {project.shortDescription}
         </p>
 
-        {/* Tech Tags */}
-        <div className="flex flex-wrap gap-2 mb-5">
+        {/* Technologies Tags Row */}
+        <div className="flex flex-wrap gap-1.5 mb-6.5 select-none">
           {project.technologies.slice(0, 3).map((tech) => (
             <span
               key={tech}
-              className="px-4 py-1.5 min-h-[32px] text-[12px] font-medium leading-none inline-flex items-center text-white/50 bg-white/4 border border-white/6 rounded-[10px]"
+              className="px-3 py-1 rounded-[8px] text-[10px] font-medium bg-white/[0.01] border border-white/[0.06] text-white/50"
             >
               {tech}
             </span>
           ))}
           {project.technologies.length > 3 && (
-            <span className="px-4 py-1.5 min-h-[32px] text-[12px] font-medium leading-none inline-flex items-center text-white/40 bg-white/4 border border-white/6 rounded-[10px]">
+            <span className="px-3 py-1 rounded-[8px] text-[10px] font-medium bg-white/[0.01] border border-white/[0.06] text-white/35">
               +{project.technologies.length - 3}
             </span>
           )}
         </div>
 
-        {/* Actions */}
-        <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/4">
-          <div className="flex items-center gap-3">
+        {/* Bottom Closing Action Grid */}
+        <div className="flex items-center justify-between mt-auto pt-5.5 border-t border-white/[0.04]">
+          <div className="flex items-center gap-4">
             {project.githubUrl ? (
               <a
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1.5 text-white/50 hover:text-white text-xs transition-colors duration-200"
+                className="flex items-center gap-1.5 text-white/45 hover:text-white text-[11px] transition-colors duration-200"
               >
-                <FiGithub size={14} />
+                <FiGithub size={13.5} />
                 GitHub
               </a>
             ) : null}
@@ -115,9 +119,9 @@ export default function ProjectCard({ project, onOpenModal, index = 0 }: Project
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1.5 text-white/50 hover:text-accent text-xs transition-colors duration-200"
+                className="flex items-center gap-1.5 text-white/45 hover:text-accent-light text-[11px] transition-colors duration-200"
               >
-                <FiExternalLink size={14} />
+                <FiExternalLink size={13.5} />
                 Demo
               </a>
             ) : null}
@@ -125,12 +129,12 @@ export default function ProjectCard({ project, onOpenModal, index = 0 }: Project
 
           <button
             onClick={() => onOpenModal(project)}
-            className="h-10 px-5 text-xs font-semibold text-accent border border-accent/25 bg-accent/5 hover:bg-accent hover:text-white rounded-[14px] transition-all duration-300 group/btn inline-flex items-center justify-center gap-1.5 cursor-pointer"
+            className="h-9 px-4.5 text-[10px] font-bold tracking-wider uppercase text-accent-light border border-accent/20 bg-accent/4 hover:bg-accent hover:border-accent hover:text-white rounded-[10px] transition-all duration-300 group/btn inline-flex items-center justify-center gap-1.5 cursor-pointer"
           >
             Case Study
             <FiArrowRight
-              size={12}
-              className="group-hover/btn:translate-x-1 transition-transform duration-200"
+              size={11.5}
+              className="group-hover/btn:translate-x-0.5 transition-transform duration-200"
             />
           </button>
         </div>

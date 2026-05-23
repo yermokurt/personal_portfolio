@@ -88,7 +88,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative section-padding scroll-mt-[60px]">
+    <section id="contact" className="relative section-padding scroll-mt-20">
       {/* BG */}
       <div className="absolute inset-0 pointer-events-none">
         <div

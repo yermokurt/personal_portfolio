@@ -9,7 +9,7 @@ import { achievements } from "@/data/achievements";
 
 export default function AchievementsSection() {
   return (
-    <section id="achievements" className="relative section-padding scroll-mt-[60px]">
+    <section id="achievements" className="relative section-padding scroll-mt-20">
       {/* BG */}
       <div className="absolute inset-0 pointer-events-none">
         <div

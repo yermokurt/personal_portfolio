@@ -46,7 +46,8 @@ export default function GalleryLightbox({ images, currentIndex, isOpen, onClose,
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-70 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-8"
+          className="fixed inset-0 z-[1100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-8"
+          data-lenis-prevent
         >
           {/* Close */}
           <button

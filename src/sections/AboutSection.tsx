@@ -22,7 +22,7 @@ const stats = [
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative section-padding scroll-mt-[60px]">
+    <section id="about" className="relative section-padding scroll-mt-20">
       {/* Subtle background */}
       <div className="absolute inset-0 pointer-events-none">
         <div

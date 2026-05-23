@@ -13,7 +13,7 @@ export function scrollToSection(id: string) {
   if (el) {
     const lenis = (window as any).lenis;
     if (lenis) {
-      lenis.scrollTo(el, { offset: -60 });
+      lenis.scrollTo(el, { offset: -40 });
     } else {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }

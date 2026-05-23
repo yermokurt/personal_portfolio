@@ -46,7 +46,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
     if (action.type === "gallery" && project?.galleryImages) {
       setGalleryIndex(0);
       setGalleryOpen(true);
-    } else if (action.type === "paper" && action.url) {
+    } else if (action.type === "paper" && action.url && !action.url.startsWith("http")) {
       setPdfUrl(action.url);
       setPdfOpen(true);
     } else if (action.url) {
@@ -56,11 +56,11 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
 
   const renderIcon = (type: string) => {
     switch (type) {
-      case "github": return <FiGithub size={15} />;
-      case "demo": return <FiExternalLink size={15} />;
-      case "gallery": return <FiImage size={15} />;
-      case "paper": return <FiFileText size={15} />;
-      default: return <FiExternalLink size={15} />;
+      case "github": return <FiGithub size={13.5} />;
+      case "demo": return <FiExternalLink size={13.5} />;
+      case "gallery": return <FiImage size={13.5} />;
+      case "paper": return <FiFileText size={13.5} />;
+      default: return <FiExternalLink size={13.5} />;
     }
   };
 
@@ -76,116 +76,94 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               animate="visible"
               exit="exit"
               onClick={onClose}
-              className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md"
+              className="fixed inset-0 z-[1000] bg-black/85 backdrop-blur-md"
             />
 
-            {/* Modal */}
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 pointer-events-none">
+            {/* Modal Container */}
+            <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 md:p-8 pointer-events-none select-none">
               <motion.div
                 variants={modalContent}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl pointer-events-auto shadow-[0_25px_80px_rgba(0,0,0,0.7)] border border-white/10"
+                className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl pointer-events-auto shadow-[0_30px_100px_rgba(0,0,0,0.8)] border border-white/[0.06] select-text"
+                data-lenis-prevent
                 style={{
-                  background: "linear-gradient(135deg, #111120 0%, #0d0d18 100%)",
+                  background: "linear-gradient(135deg, #0d0d18 0%, #0a0a0f 100%)",
                 }}
               >
                 {/* Close Button */}
                 <button
                   onClick={onClose}
-                  className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/80 text-white/70 hover:text-white transition-all duration-200 backdrop-blur-sm border border-white/10"
+                  className="absolute top-4 right-4 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-black/55 hover:bg-black/80 text-white/60 hover:text-white transition-all duration-200 backdrop-blur-sm border border-white/[0.08] cursor-pointer"
                   aria-label="Close modal"
                 >
-                  <FiX size={20} />
+                  <FiX size={18} />
                 </button>
 
-                {/* Hero Image */}
-                <div className="relative aspect-video w-full rounded-t-2xl overflow-hidden bg-black">
+                {/* Cinematic 21:9 Image Frame */}
+                <div className="relative aspect-[21/9] w-full overflow-hidden bg-black/40 border-b border-white/[0.04]">
                   <Image
                     src={project.featuredImage}
                     alt={project.title}
                     fill
-                    className="object-cover opacity-90"
+                    className="object-cover opacity-85 hover:scale-101 transition-transform duration-1000 ease-out"
                     sizes="100vw"
+                    priority
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-background-secondary via-transparent to-transparent opacity-80" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent opacity-95" />
                 </div>
 
-                {/* Content */}
-                <div className="p-8 md:p-12">
-                  {/* Header */}
-                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6 mb-10">
-                    <div className="max-w-2xl">
-                      <div className="flex flex-wrap gap-2 mb-4">
+                {/* Content Panel */}
+                <div className="p-8 md:p-10 lg:p-12">
+                  {/* Header Grid */}
+                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8 mb-10">
+                    <div className="max-w-2xl text-left">
+                      <div className="flex flex-wrap gap-1.5 mb-4 select-none">
                         {project.category.map((cat) => (
                           <span
                             key={cat}
-                            className="px-4 py-1.5 text-[11px] font-bold tracking-widest uppercase text-accent bg-accent/10 border border-accent/20 rounded-[10px]"
+                            className="px-3.5 py-1.5 text-[9px] font-extrabold tracking-[0.22em] uppercase text-accent-light bg-accent/8 border border-accent/20 rounded-[8px]"
                           >
                             {cat}
                           </span>
                         ))}
                       </div>
-                      <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-2">
+                      <h2 className="text-2xl md:text-3xl font-display font-bold text-white leading-tight mb-2">
                         {project.title}
                       </h2>
-                      <p className="text-muted text-sm tracking-wide">{project.completionDate}</p>
+                      <p className="text-muted text-xs tracking-wider select-none">{project.completionDate}</p>
                     </div>
 
-                    {/* Actions */}
-                    <div className="flex flex-wrap items-center gap-3">
+                    {/* Highly Intentional Action Buttons */}
+                    <div className="flex flex-wrap items-center gap-3.5 select-none">
                       {project.actions?.map((action, idx) => (
                         <button
                           key={idx}
                           onClick={() => handleActionClick(action)}
-                          className={`flex items-center gap-2 px-5 py-2.5 rounded-[14px] text-sm font-medium transition-all duration-300 cursor-pointer ${
+                          className={`flex items-center gap-2 px-5 h-10 rounded-[10px] text-xs font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer ${
                             action.type === 'demo' || action.type === 'gallery'
-                              ? 'bg-gradient-to-r from-[#38bdf8] via-[#3b82f6] to-[#6366f1] text-white border-none shadow-[0_4px_15px_rgba(59,130,246,0.25)] hover:shadow-[0_4px_25px_rgba(59,130,246,0.45)]'
-                              : 'bg-white/4 border border-white/8 text-white/80 hover:text-white hover:bg-white/10'
+                              ? 'bg-gradient-to-r from-[#38bdf8] via-[#3b82f6] to-[#6366f1] text-white border-none shadow-[0_4px_15px_rgba(59,130,246,0.2)] hover:shadow-[0_4px_25px_rgba(59,130,246,0.4)] hover:-translate-y-0.5'
+                              : 'bg-white/[0.02] border border-white/[0.06] text-white/70 hover:text-white hover:bg-white/[0.06] hover:border-white/20 hover:-translate-y-0.5'
                           }`}
                         >
                           {renderIcon(action.type)}
                           {action.label}
                         </button>
                       ))}
-                      
-                      {/* Fallback old buttons if actions array not present */}
-                      {!project.actions && project.githubUrl && (
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-5 py-2.5 rounded-[14px] bg-white/4 border border-white/8 text-white/80 hover:text-white hover:bg-white/10 text-sm font-medium transition-all duration-300"
-                        >
-                          <FiGithub size={15} />
-                          GitHub
-                        </a>
-                      )}
-                      {!project.actions && project.liveDemoUrl && (
-                        <a
-                          href={project.liveDemoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-5 py-2.5 rounded-[14px] bg-gradient-to-r from-[#38bdf8] via-[#3b82f6] to-[#6366f1] text-white text-sm font-medium border-none shadow-[0_4px_15px_rgba(59,130,246,0.25)] hover:shadow-[0_4px_25px_rgba(59,130,246,0.45)] transition-all duration-300"
-                        >
-                          <FiExternalLink size={15} />
-                          Live Demo
-                        </a>
-                      )}
                     </div>
                   </div>
 
-                  {/* Technologies */}
-                  <div className="mb-10 p-6 rounded-xl bg-white/2 border border-white/5">
-                    <h3 className="text-xs font-semibold tracking-widest uppercase text-white/50 mb-4">
+                  {/* Tools Grid */}
+                  <div className="mb-10 p-6 rounded-xl bg-white/[0.01] border border-white/[0.04]">
+                    <h3 className="text-[10px] font-bold tracking-[0.16em] uppercase text-white/40 mb-4 select-none">
                       Technologies & Tools
                     </h3>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 select-none">
                       {project.technologies.map((tech) => (
                         <span
                           key={tech}
-                          className="px-4 py-2 text-sm text-white/80 bg-surface border border-white/[0.07] rounded-[10px] shadow-sm"
+                          className="px-3.5 py-1.5 text-xs text-white/70 bg-[#111120]/30 border border-white/[0.06] rounded-[8px]"
                         >
                           {tech}
                         </span>
@@ -193,28 +171,28 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                     </div>
                   </div>
 
-                  {/* Sections */}
-                  <div className="grid gap-10">
+                  {/* Section Details Grid */}
+                  <div className="grid gap-8 text-left">
                     <Section title="Project Overview">
-                      <p className="text-muted-light leading-relaxed text-lg max-w-4xl">{project.overview}</p>
+                      <p className="text-muted leading-relaxed text-sm md:text-base max-w-4xl">{project.overview}</p>
                     </Section>
 
-                    <div className="h-px bg-white/5 w-full" />
+                    <div className="h-px bg-white/[0.04] w-full" />
 
                     <Section title="Development Process">
-                      <p className="text-muted-light leading-relaxed text-lg max-w-4xl">{project.process}</p>
+                      <p className="text-muted leading-relaxed text-sm md:text-base max-w-4xl">{project.process}</p>
                     </Section>
 
-                    <div className="h-px bg-white/5 w-full" />
+                    <div className="h-px bg-white/[0.04] w-full" />
 
                     <Section title="Challenges Solved">
-                      <p className="text-muted-light leading-relaxed text-lg max-w-4xl">{project.challenges}</p>
+                      <p className="text-muted leading-relaxed text-sm md:text-base max-w-4xl">{project.challenges}</p>
                     </Section>
 
-                    <div className="h-px bg-white/5 w-full" />
+                    <div className="h-px bg-white/[0.04] w-full" />
 
                     <Section title="UI/UX Approach">
-                      <p className="text-muted-light leading-relaxed text-lg max-w-4xl">{project.uiuxApproach}</p>
+                      <p className="text-muted leading-relaxed text-sm md:text-base max-w-4xl">{project.uiuxApproach}</p>
                     </Section>
                   </div>
                 </div>
@@ -247,7 +225,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h3 className="text-white font-semibold text-lg mb-3">{title}</h3>
+      <h3 className="text-[10px] font-bold tracking-[0.16em] uppercase text-white/40 mb-3.5 select-none">{title}</h3>
       {children}
     </div>
   );
