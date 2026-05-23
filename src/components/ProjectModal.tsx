@@ -101,8 +101,8 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                   <FiX size={18} />
                 </button>
 
-                {/* Cinematic 21:9 Image Frame */}
-                <div className="relative aspect-[21/9] w-full overflow-hidden bg-black/40 border-b border-white/[0.04]">
+                {/* Cinematic Responsive Image Frame */}
+                <div className="relative aspect-[16/10] sm:aspect-[21/9] w-full overflow-hidden bg-black/40 border-b border-white/[0.04]">
                   <Image
                     src={project.featuredImage}
                     alt={project.title}

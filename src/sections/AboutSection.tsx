@@ -36,7 +36,7 @@ export default function AboutSection() {
       </div>
 
       <div className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] lg:grid-cols-[420px_1fr] gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-12 lg:gap-16 items-center">
           {/* Left — Visual Anchor */}
           <motion.div
             variants={slideInLeft}

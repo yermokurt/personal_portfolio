@@ -60,7 +60,10 @@ export default function SkillsSection() {
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
-                  <span className="relative z-10">{cat.title}</span>
+                  <span className="relative z-10 hidden sm:inline">{cat.title}</span>
+                  <span className="relative z-10 sm:hidden">
+                    {cat.id === "creative" ? "Creative" : "Technical"}
+                  </span>
                 </button>
               );
             })}

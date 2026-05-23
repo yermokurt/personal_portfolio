@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useScrollProgress } from "@/hooks/useScrollProgress";
 import { scrollToSection } from "@/lib/utils";
-import { FiMenu, FiX } from "react-icons/fi";
 import logoImg from "@/assets/logo.png";
 
 const navLinks = [
@@ -26,7 +25,7 @@ export default function Navbar() {
   // Close mobile menu on resize
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) setMobileOpen(false);
+      if (window.innerWidth >= 1024) setMobileOpen(false);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -48,9 +47,9 @@ export default function Navbar() {
           paddingTop: isScrolled ? "16px" : "24px",
         }}
       >
-        <div className="w-full max-w-7xl px-6 md:px-8 lg:px-12 pointer-events-auto">
+        <div className="w-full max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12 pointer-events-auto">
           <div
-            className="w-full rounded-full border transition-all duration-500 px-6 md:px-8 lg:px-10 overflow-hidden isolate backdrop-blur-xl bg-black/70 supports-[backdrop-filter]:bg-black/55 pointer-events-auto"
+            className="w-full rounded-full border transition-all duration-500 px-4 sm:px-6 md:px-8 lg:px-10 overflow-hidden isolate backdrop-blur-xl bg-black/70 supports-[backdrop-filter]:bg-black/55 pointer-events-auto"
             style={{
               borderColor: isScrolled
                 ? "rgba(255, 255, 255, 0.08)"
@@ -64,9 +63,9 @@ export default function Navbar() {
               {/* Logo / Name */}
               <button
                 onClick={() => handleNavClick("hero")}
-                className="group flex items-center gap-3.5 text-left cursor-pointer"
+                className="group flex items-center gap-2 sm:gap-3.5 text-left cursor-pointer shrink-0"
               >
-                <div className="relative w-9 h-9 transition-all duration-500 group-hover:scale-105">
+                <div className="relative w-8 h-8 sm:w-9 sm:h-9 transition-all duration-500 group-hover:scale-105">
                   <Image
                     src={logoImg}
                     alt="Kurt Yermo Logo"
@@ -76,14 +75,14 @@ export default function Navbar() {
                     priority
                   />
                 </div>
-                <span className="font-bold text-white font-display text-base tracking-tight group-hover:text-accent transition-colors duration-300">
+                <span className="font-bold text-white font-display text-sm sm:text-base tracking-tight group-hover:text-accent transition-colors duration-300 whitespace-nowrap">
                   Kurt<span className="text-accent-light">Yermo</span>
                   <span className="text-accent font-extrabold">.</span>
                 </span>
               </button>
 
               {/* Desktop Nav */}
-              <div className="hidden md:flex items-center gap-4 lg:gap-6">
+              <div className="hidden lg:flex items-center gap-4 lg:gap-6">
                 {navLinks.map(({ id, label }) => {
                   const isActive = activeSection === id;
                   return (
@@ -121,11 +120,19 @@ export default function Navbar() {
 
               {/* Mobile Menu Button */}
               <button
-                className="md:hidden text-white/70 hover:text-white hover:bg-white/5 transition-all p-2.5 rounded-full border border-transparent hover:border-white/10"
+                className="lg:hidden flex items-center justify-center shrink-0 text-white/70 hover:text-white hover:bg-white/5 transition-all p-2.5 rounded-full border border-transparent hover:border-white/10 cursor-pointer"
                 onClick={() => setMobileOpen((prev) => !prev)}
                 aria-label="Toggle menu"
               >
-                {mobileOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+                {mobileOpen ? (
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                )}
               </button>
             </div>
           </div>
@@ -157,11 +164,13 @@ export default function Navbar() {
             >
               {/* Drawer header close button */}
               <button
-                className="absolute top-6 right-6 text-white/70 hover:text-white p-2 hover:bg-white/5 rounded-xl transition-all"
+                className="absolute top-6 right-6 text-white/70 hover:text-white p-2 hover:bg-white/5 rounded-xl transition-all cursor-pointer"
                 onClick={() => setMobileOpen(false)}
                 aria-label="Close menu"
               >
-                <FiX size={20} />
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
 
               <div className="flex flex-col gap-3 mt-4">

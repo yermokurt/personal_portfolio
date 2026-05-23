@@ -79,7 +79,7 @@ export default function HeroSection() {
 
             {/* Title */}
             <motion.div variants={heroTitle} className="mb-6">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[1.05] uppercase">
+              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[1.05] uppercase">
                 Creative <br />
                 <span className="text-gradient">Developer</span>
               </h1>
@@ -120,31 +120,31 @@ export default function HeroSection() {
             {/* Stats Row */}
             <motion.div
               variants={heroSubtitle}
-              className="flex items-center gap-6 sm:gap-10 md:gap-12 w-full pt-8 border-t border-white/5"
+              className="flex flex-wrap items-center justify-between sm:justify-start gap-4 sm:gap-10 md:gap-12 w-full pt-8 border-t border-white/5"
             >
               <div>
-                <div className="text-2xl md:text-3xl font-black text-white tracking-tight flex items-baseline">
-                  3<span className="text-accent-light text-xl ml-0.5">+</span>
+                <div className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight flex items-baseline">
+                  3<span className="text-accent-light text-lg sm:text-xl ml-0.5">+</span>
                 </div>
-                <div className="text-[9px] font-bold tracking-[0.15em] uppercase text-muted-light mt-1 text-left">
+                <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.15em] uppercase text-muted-light mt-1 text-left">
                   Years Exp
                 </div>
               </div>
-              <div className="w-px h-8 bg-white/5" />
+              <div className="hidden sm:block w-px h-8 bg-white/5" />
               <div>
-                <div className="text-2xl md:text-3xl font-black text-white tracking-tight flex items-baseline">
-                  20<span className="text-accent-light text-xl ml-0.5">+</span>
+                <div className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight flex items-baseline">
+                  20<span className="text-accent-light text-lg sm:text-xl ml-0.5">+</span>
                 </div>
-                <div className="text-[9px] font-bold tracking-[0.15em] uppercase text-muted-light mt-1 text-left">
+                <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.15em] uppercase text-muted-light mt-1 text-left">
                   Projects Done
                 </div>
               </div>
-              <div className="w-px h-8 bg-white/5" />
+              <div className="hidden sm:block w-px h-8 bg-white/5" />
               <div>
-                <div className="text-2xl md:text-3xl font-black text-white tracking-tight flex items-baseline">
-                  15<span className="text-accent-light text-xl ml-0.5">+</span>
+                <div className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight flex items-baseline">
+                  15<span className="text-accent-light text-lg sm:text-xl ml-0.5">+</span>
                 </div>
-                <div className="text-[9px] font-bold tracking-[0.15em] uppercase text-muted-light mt-1 text-left">
+                <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.15em] uppercase text-muted-light mt-1 text-left">
                   Happy Clients
                 </div>
               </div>
@@ -160,7 +160,7 @@ export default function HeroSection() {
             <div className="absolute -inset-4 bg-gradient-to-tr from-[#38bdf8] via-[#3b82f6] to-[#6366f1] rounded-[30px] opacity-15 blur-2xl z-0 pointer-events-none" />
 
             {/* Sizing Anchor Wrapper Frame */}
-            <div className="relative w-full max-w-[320px] sm:max-w-[350px] flex flex-col items-center lg:block z-10">
+            <div className="relative w-full max-w-[270px] sm:max-w-[350px] flex flex-col items-center lg:block z-10">
               
               {/* Main Portrait Frame with original backing gradient glowing border */}
               <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden bg-surface-card/40 backdrop-blur-md border border-white/10 p-3 z-10 shadow-[0_15px_40px_rgba(0,0,0,0.5)] select-none">
