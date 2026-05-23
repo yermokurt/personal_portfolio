@@ -38,7 +38,7 @@ export default function SectionHeader({
           <span className="h-px w-8 bg-accent" />
         </div>
       )}
-      <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight tracking-tight">
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-5 leading-tight tracking-tight">
         {title}
         {titleAccent && (
           <>

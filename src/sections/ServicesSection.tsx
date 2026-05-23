@@ -10,7 +10,7 @@ import { scrollToSection } from "@/lib/utils";
 
 export default function ServicesSection() {
   return (
-    <section id="services" className="relative section-padding scroll-mt-[140px]">
+    <section id="services" className="relative section-padding scroll-mt-[60px]">
       {/* BG */}
       <div className="absolute inset-0 pointer-events-none">
         <div

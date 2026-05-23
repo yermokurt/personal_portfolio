@@ -9,7 +9,7 @@ export interface Achievement {
 export const achievements: Achievement[] = [
   {
     id: "projects",
-    value: "20+",
+    value: "15+",
     label: "Projects Completed",
     description: "Delivered across design, development, and branding",
     icon: "HiOutlineCollection",
@@ -23,8 +23,8 @@ export const achievements: Achievement[] = [
   },
   {
     id: "experience",
-    value: "3+",
-    label: "Years Experience",
+    value: "4+",
+    label: "Total Years Experience",
     description: "In graphic design, UI/UX, and frontend development",
     icon: "HiOutlineClock",
   },

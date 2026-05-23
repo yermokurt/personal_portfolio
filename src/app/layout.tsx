@@ -73,6 +73,15 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning>
       <body className="antialiased">
         <LenisProvider>
+          {/* Top ambient blur & solid background fade mask */}
+          <div 
+            className="fixed top-0 left-0 right-0 h-[125px] pointer-events-none z-40 select-none"
+            style={{
+              background: "linear-gradient(to bottom, #0a0a0f 0%, #0a0a0f 60px, rgba(10, 10, 15, 0.93) 85px, rgba(10, 10, 15, 0) 125px)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+            }}
+          />
           <Navbar />
           <main>{children}</main>
           <Footer />

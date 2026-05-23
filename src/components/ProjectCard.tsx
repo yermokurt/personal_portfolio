@@ -33,8 +33,8 @@ export default function ProjectCard({ project, onOpenModal, index = 0 }: Project
       )}
       style={{
         boxShadow: hovered
-          ? "0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(59, 130, 246, 0.08)"
-          : "0 4px 30px rgba(0,0,0,0.3)",
+          ? "0 12px 30px rgba(0,0,0,0.4), 0 0 0 1px rgba(59, 130, 246, 0.15)"
+          : "0 4px 20px rgba(0,0,0,0.25), 0 0 0 1px rgba(255, 255, 255, 0.03)",
       }}
     >
       {/* Image */}

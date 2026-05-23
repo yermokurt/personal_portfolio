@@ -16,7 +16,7 @@ export const experiences: ExperienceEntry[] = [
     role: "Freelance Graphic Designer",
     company: "Self-Employed",
     companyType: "Freelance",
-    period: "2022 — Present",
+    period: "2019 — Present",
     description:
       "Providing end-to-end graphic design services to clients across various industries including food and beverage, retail, and personal branding. Specializing in brand identity creation, social media design, and marketing materials.",
     highlights: [
@@ -32,7 +32,7 @@ export const experiences: ExperienceEntry[] = [
     role: "Social Media Page Manager",
     company: "Local Business Clients",
     companyType: "Contract",
-    period: "2023 — 2024",
+    period: "2024 — 2025",
     description:
       "Managed social media presence for local business clients, handling content planning, design, scheduling, and performance analysis. Grew follower counts and improved engagement rates through consistent, on-brand content strategies.",
     highlights: [
@@ -46,9 +46,9 @@ export const experiences: ExperienceEntry[] = [
   {
     id: "internship",
     role: "IT Intern",
-    company: "Industry Internship",
+    company: "Verafede Inc.",
     companyType: "Internship",
-    period: "2024",
+    period: "2026",
     description:
       "Completed a structured IT internship gaining hands-on experience with real-world systems, software development workflows, and professional team collaboration. Applied academic knowledge in a production environment.",
     highlights: [

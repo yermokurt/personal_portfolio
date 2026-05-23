@@ -31,7 +31,7 @@ const typeLabel = {
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="relative section-padding scroll-mt-[140px]">
+    <section id="experience" className="relative section-padding scroll-mt-[60px]">
       {/* BG */}
       <div className="absolute inset-0 pointer-events-none">
         <div
@@ -94,56 +94,51 @@ export default function ExperienceSection() {
                   {/* Dot - Centered on desktop, left on mobile */}
                   <motion.div
                     variants={timelineDot}
-                    className="absolute left-[14px] md:left-1/2 md:-translate-x-1/2 top-6 w-3.5 h-3.5 rounded-full border-2 border-accent bg-background z-10"
-                    style={{ boxShadow: "0 0 10px rgba(59,130,246,0.5)" }}
+                    className="absolute left-[14px] md:left-1/2 md:-translate-x-1/2 top-6.5 w-3 h-3 rounded-full border-2 border-accent bg-background z-10 animate-pulse-ring"
+                    style={{ boxShadow: "0 0 10px rgba(59,130,246,0.3)" }}
                   />
 
                   {/* Card Container */}
-                  <div className="w-full md:w-[calc(50%-2rem)]">
+                  <div className="w-full md:w-[calc(50%-2.5rem)]">
                     <div
                       className={cn(
-                        "relative rounded-[20px] p-5 md:p-6 glass border border-white/6",
-                        "hover:border-accent/25 transition-all duration-300 shadow-md hover:shadow-lg"
+                        "relative rounded-[18px] p-6 md:p-7 glass border border-white/5 bg-[#111120]/30",
+                        "hover:border-accent/20 transition-all duration-400 shadow-sm hover:shadow-[0_4px_25px_rgba(59,130,246,0.02)]"
                       )}
                     >
-                      {/* Header */}
-                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
-                        <div className="flex flex-col gap-2">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <span
-                              className={cn(
-                                "inline-flex items-center gap-1.5 px-4 py-1.5 min-h-[32px] rounded-[10px] text-[12px] font-medium leading-none border",
-                                typeColor[exp.type]
-                              )}
-                            >
-                              <Icon size={11} />
-                              {typeLabel[exp.type]}
-                            </span>
-                            <span className="text-muted text-xs font-medium sm:hidden">
-                              · {exp.period}
-                            </span>
-                          </div>
-                          <div>
-                            <h3 className="text-white font-bold text-lg leading-tight">
-                              {exp.role}
-                            </h3>
-                            <p className="text-muted-light text-sm mt-0.5">{exp.company}</p>
-                          </div>
+                      {/* Header & Date Block */}
+                      <div className="flex flex-col gap-3.5 mb-5">
+                        <div className="flex items-center justify-between flex-wrap gap-2">
+                          <span
+                            className={cn(
+                              "inline-flex items-center gap-1.5 px-3.5 py-1 min-h-[26px] rounded-full text-[11px] font-semibold leading-none uppercase tracking-wider border",
+                              typeColor[exp.type]
+                            )}
+                          >
+                            <Icon size={10} />
+                            {typeLabel[exp.type]}
+                          </span>
+                          <span className="text-muted-light text-xs font-medium tracking-wide">
+                            {exp.period}
+                          </span>
                         </div>
-                        <span className="hidden sm:inline-block text-muted-light text-xs font-medium whitespace-nowrap mt-1">
-                          {exp.period}
-                        </span>
+                        <div>
+                          <h3 className="text-white font-bold text-lg tracking-tight leading-snug">
+                            {exp.role}
+                          </h3>
+                          <p className="text-accent-light text-xs font-semibold uppercase tracking-wider mt-1">{exp.company}</p>
+                        </div>
                       </div>
 
                       {/* Description */}
-                      <p className="text-muted-light text-sm leading-relaxed mb-4">
+                      <p className="text-muted-light text-sm leading-relaxed mb-5 max-w-[95%]">
                         {exp.description}
                       </p>
 
                       {/* Highlights */}
-                      <ul className="space-y-2">
+                      <ul className="space-y-2.5 mt-2.5">
                         {exp.highlights.map((h) => (
-                          <li key={h} className="flex items-start gap-2.5 text-xs text-muted-light">
+                          <li key={h} className="flex items-start gap-2.5 text-xs text-muted-light leading-relaxed max-w-[95%]">
                             <span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />
                             {h}
                           </li>

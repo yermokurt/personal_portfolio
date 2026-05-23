@@ -25,11 +25,11 @@ export default function Footer() {
         {/* Brand */}
         <div className="flex flex-col items-center mb-8">
           <div className="flex items-center gap-2 mb-3">
-            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-white font-bold text-sm shadow-[0_0_15px_rgba(249,115,22,0.2)]">
+            <div className="w-8 h-8 rounded-[9px] bg-accent flex items-center justify-center text-white font-bold text-sm shadow-[0_0_15px_rgba(59,130,246,0.25)]">
               K
             </div>
             <span className="font-bold text-white font-display text-base tracking-tight">
-              Kurt<span className="text-accent font-extrabold">.</span>
+              Kurt<span className="text-accent-light font-extrabold">.</span>
             </span>
           </div>
           <p className="text-muted-light text-sm leading-relaxed max-w-md">
