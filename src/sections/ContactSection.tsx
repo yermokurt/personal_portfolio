@@ -164,18 +164,7 @@ export default function ContactSection() {
 
               {/* Bottom Section: CV & Availability */}
               <div className="space-y-6 text-left">
-                {contactInfo.resumeUrl ? (
-                  <div>
-                    <a
-                      href={contactInfo.resumeUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-white/8 text-white font-bold hover:text-accent-light hover:border-accent/40 text-[10px] tracking-widest uppercase transition-all duration-300 bg-white/2 hover:bg-accent/5 hover:-translate-y-0.5"
-                    >
-                      Download CV
-                    </a>
-                  </div>
-                ) : null}
+
 
                 <div className="border border-emerald-500/15 bg-emerald-500/4 rounded-xl p-4 flex items-start gap-3">
                   <div className="relative flex h-2 w-2 mt-1.5 shrink-0">
