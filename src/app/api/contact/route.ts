@@ -40,13 +40,17 @@ export async function POST(request: NextRequest) {
     // 1. IP Rate Limiting check
     const ip = (request as any).ip || request.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
     if (ratelimit) {
-      const { success } = await ratelimit.limit(ip);
-      if (!success) {
-        console.warn(`[Contact API] Rate limit triggered for client IP: ${ip}`); // sanitized server log
-        return NextResponse.json(
-          { success: false, message: "Too many requests. Please try again later." },
-          { status: 429 }
-        );
+      try {
+        const { success } = await ratelimit.limit(ip);
+        if (!success) {
+          console.warn(`[Contact API] Rate limit triggered for client IP: ${ip}`); // sanitized server log
+          return NextResponse.json(
+            { success: false, message: "Too many requests. Please try again later." },
+            { status: 429 }
+          );
+        }
+      } catch (err) {
+        console.error("[Contact API] Rate limiting check failed (likely network/unreachable). Skipping rate limit.", err);
       }
     }
 
