@@ -113,16 +113,16 @@ export default function ProjectCard({ project, onOpenModal, index = 0 }: Project
                 GitHub
               </a>
             ) : null}
-            {project.liveDemoUrl ? (
+            {project.websiteUrl ? (
               <a
-                href={project.liveDemoUrl}
+                href={project.websiteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
                 className="flex items-center gap-1.5 text-white/45 hover:text-accent-light text-[11px] transition-colors duration-200"
               >
                 <FiExternalLink size={13.5} />
-                Demo
+                Website
               </a>
             ) : null}
           </div>
