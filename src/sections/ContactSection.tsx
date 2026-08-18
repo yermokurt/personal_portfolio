@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { fadeUp, slideInLeft, slideInRight } from "@/animations/variants";
+import { slideInLeft, slideInRight } from "@/animations/variants";
 import { viewportConfig } from "@/animations/transitions";
 import SectionHeader from "@/components/SectionHeader";
 import SocialLinkComponent from "@/components/SocialLink";
@@ -23,13 +23,13 @@ const contactFormSchema = z.object({
 type ContactFormData = z.infer<typeof contactFormSchema>;
 
 // Lightweight self-contained resolver to eliminate heavy package resolvers
-const customZodResolver = async (data: any) => {
+const customZodResolver = async (data: unknown) => {
   const result = contactFormSchema.safeParse(data);
   if (result.success) {
     return { values: result.data, errors: {} };
   }
-  const errors = result.error.issues.reduce((acc: any, current) => {
-    const key = current.path[0];
+  const errors = result.error.issues.reduce<Record<string, { message: string }>>((acc, current) => {
+    const key = String(current.path[0]);
     acc[key] = { message: current.message };
     return acc;
   }, {});
@@ -79,7 +79,7 @@ export default function ContactSection() {
           message: result.message || "Something went wrong. Please try again later.",
         });
       }
-    } catch (err) {
+    } catch {
       setSubmitStatus({
         type: "error",
         message: "Failed to dispatch message due to a connection error. Please try again.",

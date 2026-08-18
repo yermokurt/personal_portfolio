@@ -27,18 +27,18 @@ export default function ProjectCard({ project, onOpenModal, index = 0 }: Project
       onClick={() => onOpenModal(project)}
       className={cn(
         "group relative rounded-2xl overflow-hidden cursor-pointer",
-        "border transition-all duration-500",
+        "border transition-colors duration-200",
         "flex flex-col h-full bg-[#111120]/20"
       )}
       style={{
         borderColor: hovered ? "rgba(59, 130, 246, 0.25)" : "rgba(255, 255, 255, 0.04)",
-        transform: hovered ? "translateY(-4px)" : "translateY(0px)",
+        transform: hovered ? "translateY(-2px)" : "translateY(0px)",
         boxShadow: hovered
-          ? "0 15px 40px -15px rgba(0,0,0,0.5), 0 0 25px -5px rgba(59, 130, 246, 0.15)"
+          ? "0 15px 40px -15px rgba(0,0,0,0.5)"
           : "0 8px 30px -20px rgba(0,0,0,0.3)",
       }}
     >
-      {/* Cinematic Image Frame */}
+      {/* Project image */}
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
         <Image
           src={project.featuredImage}
@@ -50,7 +50,7 @@ export default function ProjectCard({ project, onOpenModal, index = 0 }: Project
           }}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-        {/* Cinematic gradient vignette */}
+        {/* Text legibility overlay */}
         <div
           className={cn(
             "absolute inset-0 bg-linear-to-t from-[#0a0a0f] via-[#0a0a0f]/40 to-transparent",
@@ -131,7 +131,7 @@ export default function ProjectCard({ project, onOpenModal, index = 0 }: Project
             onClick={() => onOpenModal(project)}
             className="h-9 px-4.5 text-[10px] font-bold tracking-wider uppercase text-accent-light border border-accent/20 bg-accent/4 hover:bg-accent hover:border-accent hover:text-white rounded-[10px] transition-all duration-300 group/btn inline-flex items-center justify-center gap-1.5 cursor-pointer"
           >
-            Case Study
+            Learn More
             <FiArrowRight
               size={11.5}
               className="group-hover/btn:translate-x-0.5 transition-transform duration-200"

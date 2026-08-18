@@ -34,7 +34,7 @@ export default function AchievementCard({ achievement, index = 0 }: AchievementC
       whileInView="visible"
       viewport={viewportConfig}
       transition={{ delay: index * 0.1 }}
-      whileHover={{ scale: 1.04, y: -5 }}
+      whileHover={{ y: -2 }}
       className={cn(
         "group relative rounded-2xl p-4 md:p-6 lg:p-7 text-center glass border border-white/6",
         "flex flex-col h-full justify-center items-center",
@@ -60,7 +60,7 @@ export default function AchievementCard({ achievement, index = 0 }: AchievementC
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={viewportConfig}
           transition={{ delay: index * 0.1 + 0.2, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
-          className="text-4xl font-bold text-gradient mb-1"
+          className="text-4xl font-bold text-accent-light mb-1"
         >
           {achievement.value}
         </motion.div>

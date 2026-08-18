@@ -20,7 +20,7 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "Kurt Collin G. Yermo — UI/UX Designer & Frontend Developer",
   description:
-    "Portfolio of Kurt Collin G. Yermo — IT Student, UI/UX Designer, Frontend Developer, and Graphic Designer. Building premium digital experiences with design precision and clean code.",
+    "Portfolio of Kurt Collin G. Yermo — UI/UX designer and frontend developer building practical web products and systems.",
   keywords: [
     "Kurt Collin Yermo",
     "UI/UX Designer",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Kurt Collin G. Yermo — UI/UX Designer & Frontend Developer",
     description:
-      "IT Student, UI/UX Designer, Frontend Developer & Graphic Designer. Crafting premium digital experiences.",
+      "UI/UX designer and frontend developer building practical web products and systems.",
     url: "https://kurtyermo.dev",
     siteName: "Kurt Yermo Portfolio",
     type: "website",

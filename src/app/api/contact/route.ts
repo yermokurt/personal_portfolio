@@ -27,7 +27,7 @@ if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) 
       analytics: true,
       prefix: "@upstash/ratelimit/portfolio-contact",
     });
-  } catch (err) {
+  } catch {
     // Sanitized logging: do not log raw exceptions containing potential endpoint details
     console.error("[Contact API] Error initializing Upstash Redis connection.");
   }
@@ -38,7 +38,7 @@ if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) 
 export async function POST(request: NextRequest) {
   try {
     // 1. IP Rate Limiting check
-    const ip = (request as any).ip || request.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "127.0.0.1";
     if (ratelimit) {
       try {
         const { success } = await ratelimit.limit(ip);
@@ -49,8 +49,8 @@ export async function POST(request: NextRequest) {
             { status: 429 }
           );
         }
-      } catch (err) {
-        console.error("[Contact API] Rate limiting check failed (likely network/unreachable). Skipping rate limit.", err);
+      } catch {
+        console.error("[Contact API] Rate limiting check failed. Skipping rate limit.");
       }
     }
 
@@ -114,7 +114,7 @@ Message: "${message}"`);
       message: "Message sent successfully! Thank you.",
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Sanitized server logging: never dump keys, connection URLs, or full stack traces back to client
     console.error("[Contact API] Safe Error: Failed to process contact request.", {
       message: error instanceof Error ? error.message : "Unknown error",

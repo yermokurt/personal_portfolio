@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { fadeUp, staggerContainer } from "@/animations/variants";
-import { viewportConfig } from "@/animations/transitions";
 import SectionHeader from "@/components/SectionHeader";
 import { skillCategories } from "@/data/skills";
 
@@ -30,10 +29,10 @@ export default function SkillsSection() {
         {/* Header */}
         <div className="mb-10 md:mb-12">
           <SectionHeader
-            eyebrow="Capability Architecture"
-            title="Expertise &"
-            titleAccent="Capabilities"
-            description="A highly curated architecture of visual design disciplines and engineering standards refined through real shipping cycles."
+            eyebrow="What I Work With"
+            title="Design and"
+            titleAccent="development skills"
+            description="Tools and practices I use to design interfaces, build web products, and support real project workflows."
             centered
           />
         </div>

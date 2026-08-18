@@ -9,7 +9,7 @@ import ProjectCard from "@/components/ProjectCard";
 import ProjectModal from "@/components/ProjectModal";
 import { projects, Project } from "@/data/projects";
 
-const categories = ["All", "Frontend Only", "Full Stack", "Localhost Application"];
+const categories = ["All", "Frontend Only", "Full Stack", "Computer Vision"];
 
 export default function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -41,7 +41,7 @@ export default function ProjectsSection() {
             eyebrow="Featured Work"
             title="Selected"
             titleAccent="Projects"
-            description="A curated collection of projects that showcase design thinking, technical execution, and problem-solving capability."
+            description="Web products and systems built around real workflows, from group travel and café ordering to donation management."
             centered
           />
         </div>

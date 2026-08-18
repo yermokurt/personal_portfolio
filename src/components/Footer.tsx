@@ -46,7 +46,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-muted text-[11px] font-medium tracking-wide">
-              Creative Technologist & Frontend Developer
+              UI/UX designer & frontend developer
             </p>
           </div>
 

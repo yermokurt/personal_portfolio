@@ -14,12 +14,6 @@ const highlights = [
   { label: "Graphic Design", color: "text-pink-400", bg: "bg-pink-400/10 border-pink-400/20" },
 ];
 
-const stats = [
-  { value: "3+", label: "Years Experience" },
-  { value: "20+", label: "Projects Done" },
-  { value: "15+", label: "Happy Clients" },
-];
-
 export default function AboutSection() {
   return (
     <section id="about" className="relative section-padding scroll-mt-20">
@@ -78,7 +72,7 @@ export default function AboutSection() {
                 </div>
                 <div>
                   <div className="text-white font-bold text-lg tracking-tight">Kurt Yermo</div>
-                  <div className="text-accent text-xs font-semibold tracking-wider mt-0.5 uppercase">Creative Technologist</div>
+                  <div className="text-accent text-xs font-semibold tracking-wider mt-0.5 uppercase">Designer & developer</div>
                 </div>
               </div>
 
@@ -86,30 +80,10 @@ export default function AboutSection() {
               <blockquote className="relative z-10">
                 <div className="text-accent text-4xl font-serif font-bold leading-none mb-2 opacity-30 absolute -top-3 -left-1">&ldquo;</div>
                 <p className="text-[#d1d5db] text-base leading-relaxed italic pl-5 border-l-2 border-accent/30">
-                  Design is not just how it looks—it&rsquo;s how it works. I build digital experiences that are both beautiful and purposefully engineered.
+                  Good interfaces make a real task easier: choosing, planning, tracking, or deciding.
                 </p>
               </blockquote>
-
-              {/* Stats Row */}
-              <div className="grid grid-cols-3 gap-4 mt-8 pt-6 border-t border-white/8">
-                {stats.map(({ value, label }) => (
-                  <div key={label} className="text-center">
-                    <div className="text-2xl font-bold text-white mb-0.5">{value}</div>
-                    <div className="text-muted-light text-[10px] font-bold uppercase tracking-wider">{label}</div>
-                  </div>
-                ))}
-              </div>
             </div>
-
-            {/* Floating badge */}
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-5 -right-3 px-4 py-1.5 min-h-[32px] rounded-[10px] glass border border-accent/30 text-[12px] font-medium leading-none text-accent shadow-xl inline-flex items-center"
-              style={{ background: "rgba(59,130,246,0.1)" }}
-            >
-              ✦ Available for work
-            </motion.div>
           </motion.div>
 
           {/* Right — Content */}
@@ -122,25 +96,19 @@ export default function AboutSection() {
           >
             <SectionHeader
               eyebrow="About Me"
-              title="A Creative"
-              titleAccent="Technologist"
+              title="From idea to"
+              titleAccent="usable product"
             />
 
             <div className="mt-8 space-y-6 text-muted-light text-base md:text-lg leading-[1.8] max-w-2xl">
               <p>
-                I&rsquo;m Kurt — an IT student who lives at the intersection of design and code.
-                I believe that the best digital products are born from equal parts aesthetic
-                intention and technical precision.
+                I&rsquo;m Kurt — an IT student who designs and builds web products around the people who will use them.
               </p>
               <p>
-                My background spans UI/UX design, frontend engineering, brand identity, and
-                content creation. This multi-disciplinary approach gives me a holistic view of what it takes to build
-                experiences that truly resonate with users and drive engagement.
+                My background spans UI/UX design, frontend engineering, brand identity, and content creation. It helps me carry a project from its visual direction through to the working interface.
               </p>
               <p>
-                Whether I&rsquo;m crafting a design system from scratch, writing robust React architecture,
-                or designing visuals that stop the scroll — I bring the same
-                relentless commitment to quality and craft to every project I touch.
+                I enjoy translating messy requirements into focused user flows, reusable components, and visual systems that fit the job at hand.
               </p>
             </div>
 

@@ -125,17 +125,11 @@
 
 @layer utilities {
   .text-gradient {
-    background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #6366f1 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #38bdf8;
   }
 
   .text-gradient-subtle {
-    background: linear-gradient(135deg, #ffffff 0%, #c9d1d9 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #c9d1d9;
   }
 
   .glow-accent {

@@ -17,34 +17,12 @@ export default function HeroSection() {
     >
       {/* Background Layer */}
       <div className="absolute inset-0 z-0">
-        {/* Grid */}
+        {/* One restrained background accent */}
         <div
-          className="absolute inset-0 opacity-[0.015]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(59,130,246,0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(59,130,246,0.3) 1px, transparent 1px)
-            `,
-            backgroundSize: "60px 60px",
-          }}
-        />
-
-        {/* Primary glow orb */}
-        <div
-          className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full opacity-20"
+          className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full opacity-15"
           style={{
             background:
               "radial-gradient(circle, rgba(59,130,246,0.18) 0%, rgba(59,130,246,0.03) 50%, transparent 70%)",
-            filter: "blur(90px)",
-          }}
-        />
-
-        {/* Secondary accent orb */}
-        <div
-          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full opacity-10"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%)",
             filter: "blur(90px)",
           }}
         />
@@ -88,7 +66,7 @@ export default function HeroSection() {
             {/* Description / Subtitle */}
             <motion.div variants={heroSubtitle} className="mb-8">
               <p className="text-muted-light text-left max-w-xl text-sm md:text-base leading-[1.8] opacity-80">
-                Crafting digital experiences that blend aesthetic precision with clean, performant frontend engineering.
+                I turn real workflows into clear, usable web experiences — from travel planning and café ordering to internal systems.
               </p>
             </motion.div>
 
@@ -117,35 +95,33 @@ export default function HeroSection() {
               </button>
             </motion.div>
 
-            {/* Stats Row */}
+            {/* Practice areas */}
             <motion.div
               variants={heroSubtitle}
-              className="flex flex-wrap items-center justify-between sm:justify-start gap-4 sm:gap-10 md:gap-12 w-full pt-8 border-t border-white/5"
+              className="grid grid-cols-1 sm:grid-cols-[0.8fr_1.25fr_1fr] w-full pt-8 border-t border-white/5"
             >
-              <div>
+              <div className="pb-6 sm:pb-0 sm:pr-5">
                 <div className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight flex items-baseline">
-                  3<span className="text-accent-light text-lg sm:text-xl ml-0.5">+</span>
+                  Design
                 </div>
                 <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.15em] uppercase text-muted-light mt-1 text-left">
-                  Years Exp
+                  Clear user flows
                 </div>
               </div>
-              <div className="hidden sm:block w-px h-8 bg-white/5" />
-              <div>
+              <div className="border-t border-white/5 pt-6 sm:border-t-0 sm:border-l sm:border-white/5 sm:px-5 sm:pt-0">
                 <div className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight flex items-baseline">
-                  20<span className="text-accent-light text-lg sm:text-xl ml-0.5">+</span>
+                  Development
                 </div>
                 <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.15em] uppercase text-muted-light mt-1 text-left">
-                  Projects Done
+                  From interface to database
                 </div>
               </div>
-              <div className="hidden sm:block w-px h-8 bg-white/5" />
-              <div>
+              <div className="border-t border-white/5 pt-6 sm:border-t-0 sm:border-l sm:border-white/5 sm:pl-5 sm:pt-0">
                 <div className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight flex items-baseline">
-                  15<span className="text-accent-light text-lg sm:text-xl ml-0.5">+</span>
+                  Systems
                 </div>
                 <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.15em] uppercase text-muted-light mt-1 text-left">
-                  Happy Clients
+                  Built for real workflows
                 </div>
               </div>
             </motion.div>
@@ -156,12 +132,11 @@ export default function HeroSection() {
             variants={scaleIn}
             className="relative flex items-center justify-center lg:justify-end w-full"
           >
-            {/* Ambient Background Glow behind Card (Stunning original 2nd screenshot glow) */}
-            <div className="absolute -inset-4 bg-gradient-to-tr from-[#38bdf8] via-[#3b82f6] to-[#6366f1] rounded-[30px] opacity-15 blur-2xl z-0 pointer-events-none" />
+            <div className="absolute -inset-4 bg-accent rounded-[30px] opacity-10 blur-2xl z-0 pointer-events-none" />
 
             {/* Sizing Anchor Wrapper Frame */}
             <div className="relative w-full max-w-[270px] sm:max-w-[350px] flex flex-col items-center lg:block z-10">
-              
+
               {/* Main Portrait Frame with original backing gradient glowing border */}
               <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden bg-surface-card/40 backdrop-blur-md border border-white/10 p-3 z-10 shadow-[0_15px_40px_rgba(0,0,0,0.5)] select-none">
                 <div className="relative w-full h-full rounded-[18px] overflow-hidden bg-gradient-to-tr from-[#38bdf8] via-[#3b82f6] to-[#6366f1] p-[2px]">
@@ -201,7 +176,7 @@ export default function HeroSection() {
                     Kurt Yermo
                   </span>
                   <span className="text-[7.5px] text-accent-light font-extrabold tracking-[0.12em] uppercase mt-1">
-                    Creative Technologist
+                    Designer & developer
                   </span>
                 </div>
               </div>

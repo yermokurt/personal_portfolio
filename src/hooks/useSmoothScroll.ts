@@ -2,15 +2,23 @@
 
 import { useEffect, useRef } from "react";
 
+type LenisInstance = InstanceType<typeof import("lenis").default>;
+
+declare global {
+  interface Window {
+    __portfolioLenis?: LenisInstance;
+  }
+}
+
 /**
  * Initializes Lenis smooth scrolling.
  * Returns the Lenis instance ref for advanced usage.
  */
 export function useSmoothScroll() {
-  const lenisRef = useRef<InstanceType<typeof import("lenis").default> | null>(null);
+  const lenisRef = useRef<LenisInstance | null>(null);
 
   useEffect(() => {
-    let lenis: InstanceType<typeof import("lenis").default>;
+    let lenis: LenisInstance | undefined;
     let rafId: number;
 
     const init = async () => {
@@ -24,10 +32,10 @@ export function useSmoothScroll() {
       });
 
       lenisRef.current = lenis;
-      (window as any).lenis = lenis;
+      window.__portfolioLenis = lenis;
 
       const raf = (time: number) => {
-        lenis.raf(time);
+        lenis?.raf(time);
         rafId = requestAnimationFrame(raf);
       };
       rafId = requestAnimationFrame(raf);
@@ -39,7 +47,7 @@ export function useSmoothScroll() {
       cancelAnimationFrame(rafId);
       if (lenis) {
         lenis.destroy();
-        delete (window as any).lenis;
+        delete window.__portfolioLenis;
       }
     };
   }, []);
