@@ -57,7 +57,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
   const renderIcon = (type: string) => {
     switch (type) {
       case "github": return <FiGithub size={13.5} />;
-      case "demo": return <FiExternalLink size={13.5} />;
+      case "website": return <FiExternalLink size={13.5} />;
       case "gallery": return <FiImage size={13.5} />;
       case "paper": return <FiFileText size={13.5} />;
       default: return <FiExternalLink size={13.5} />;
@@ -142,7 +142,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                           key={idx}
                           onClick={() => handleActionClick(action)}
                           className={`flex items-center gap-2 px-5 h-10 rounded-[10px] text-xs font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer ${
-                            action.type === 'demo' || action.type === 'gallery'
+                            action.type === 'website' || action.type === 'gallery'
                               ? 'bg-gradient-to-r from-[#38bdf8] via-[#3b82f6] to-[#6366f1] text-white border-none shadow-[0_4px_15px_rgba(59,130,246,0.2)] hover:shadow-[0_4px_25px_rgba(59,130,246,0.4)] hover:-translate-y-0.5'
                               : 'bg-white/[0.02] border border-white/[0.06] text-white/70 hover:text-white hover:bg-white/[0.06] hover:border-white/20 hover:-translate-y-0.5'
                           }`}
