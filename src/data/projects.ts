@@ -1,6 +1,6 @@
 export interface ProjectAction {
   label: string;
-  type: "gallery" | "paper" | "github" | "demo" | "external";
+  type: "gallery" | "paper" | "github" | "website" | "external";
   url?: string;
 }
 
@@ -15,7 +15,7 @@ export interface Project {
   galleryImages?: string[];
   researchPaperUrl?: string;
   githubUrl?: string;
-  liveDemoUrl?: string;
+  websiteUrl?: string;
   process: string;
   challenges: string;
   uiuxApproach: string;
@@ -133,7 +133,7 @@ const projectEntries: Project[] = [
       "/projects/TaiSync/Screenshot (6).png",
       "/projects/TaiSync/Screenshot (7).png",
     ],
-    liveDemoUrl: "https://taisync.vercel.app/",
+    websiteUrl: "https://taisync.vercel.app/",
     process:
       "The app was built from reusable React components, Supabase real-time data, and offline caching so important trip information remains available while people are moving between places.",
     challenges:
@@ -144,7 +144,7 @@ const projectEntries: Project[] = [
     featured: true,
     status: "completed",
     actions: [
-      { label: "Visit Website", type: "demo", url: "https://taisync.vercel.app/" },
+      { label: "Visit Website", type: "website", url: "https://taisync.vercel.app/" },
       { label: "View Gallery", type: "gallery" },
     ],
   },
@@ -168,7 +168,7 @@ const projectEntries: Project[] = [
       "/projects/1PM/Screenshot (14).png",
       "/projects/1PM/Screenshot (15).png",
     ],
-    liveDemoUrl: "https://1pmclub.vercel.app/",
+    websiteUrl: "https://1pmclub.vercel.app/",
     process:
       "The product evolved through customer ordering flows and a staff dashboard for menu management, order handling, reports, capacity control, and notifications.",
     challenges:
@@ -179,7 +179,7 @@ const projectEntries: Project[] = [
     featured: true,
     status: "completed",
     actions: [
-      { label: "Visit Website", type: "demo", url: "https://1pmclub.vercel.app/" },
+      { label: "Visit Website", type: "website", url: "https://1pmclub.vercel.app/" },
       { label: "View Gallery", type: "gallery" },
     ],
   },
