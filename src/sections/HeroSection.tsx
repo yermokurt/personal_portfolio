@@ -166,7 +166,7 @@ export default function HeroSection() {
                     src={logoImg}
                     alt="Kurt Yermo"
                     width={14}
-                    height={14}
+                    height={12}
                     className="object-contain"
                   />
                 </div>

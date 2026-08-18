@@ -123,9 +123,8 @@ const projectEntries: Project[] = [
       "TaiSync is a shared travel companion that brings itineraries, expenses, group coordination, and trip information into one mobile-first experience for people travelling in Taiwan.",
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Zustand", "Supabase", "IndexedDB", "Serwist PWA", "MapLibre", "Leaflet"],
     category: ["Full Stack"],
-    featuredImage: "/projects/TaiSync/Screenshot (1).png",
+    featuredImage: "/projects/TaiSync/Screenshot (2).png",
     galleryImages: [
-      "/projects/TaiSync/Screenshot (1).png",
       "/projects/TaiSync/Screenshot (2).png",
       "/projects/TaiSync/Screenshot (3).png",
       "/projects/TaiSync/Screenshot (4).png",

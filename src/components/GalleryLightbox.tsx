@@ -85,7 +85,7 @@ export default function GalleryLightbox({ images, currentIndex, isOpen, onClose,
               alt={`Gallery Image ${currentIndex + 1}`}
               fill
               className="object-contain"
-              sizes="100vw"
+              sizes="(max-width: 1280px) calc(100vw - 2rem), 1152px"
             />
           </div>
           

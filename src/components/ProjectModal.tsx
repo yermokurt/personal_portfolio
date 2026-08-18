@@ -108,7 +108,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                     alt={project.title}
                     fill
                     className="object-cover opacity-85 hover:scale-101 transition-transform duration-1000 ease-out"
-                    sizes="100vw"
+                    sizes="(max-width: 1024px) calc(100vw - 2rem), 1024px"
                     priority
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent opacity-95" />
