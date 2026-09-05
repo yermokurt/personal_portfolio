@@ -12,8 +12,9 @@ import { OS_EVENT } from "./DesktopCanvas";
 import { MIN_WINDOW_HEIGHT, MIN_WINDOW_WIDTH, type ManagedWindow, type WindowBounds } from "./AppWindow";
 import ProjectPreview from "./ProjectPreview";
 import PlaygroundApp from "./PlaygroundApp";
+import ResumeViewer from "./ResumeViewer";
 import TerminalApp from "./TerminalApp";
-import { AboutApp, ExperienceApp, ResumeApp } from "./StaticApps";
+import { AboutApp, ExperienceApp } from "./StaticApps";
 import SystemMenuBar from "./SystemMenuBar";
 import TechExplorer from "./TechExplorer";
 import WindowManager from "./WindowManager";
@@ -22,13 +23,13 @@ import WorkApp from "./WorkApp";
 const MENU_HEIGHT = 46;
 const DOCK_RESERVE = 92;
 
-function AppContent({ app, technology, onOpenApp, onOpenProject, onRestart }: { app: AppId; technology?: string; onOpenApp: (app: AppId) => void; onOpenProject: (projectId: string) => void; onRestart: () => void }) {
+function AppContent({ app, technology, fullscreen, onOpenApp, onOpenProject, onToggleFullscreen, onRestart }: { app: AppId; technology?: string; fullscreen: boolean; onOpenApp: (app: AppId) => void; onOpenProject: (projectId: string) => void; onToggleFullscreen: () => void; onRestart: () => void }) {
   switch (app) {
     case "work": return <WorkApp />;
     case "about": return <AboutApp />;
     case "experience": return <ExperienceApp />;
     case "tech": return <TechExplorer initialTechnology={technology} />;
-    case "resume": return <ResumeApp />;
+    case "resume": return <ResumeViewer fullscreen={fullscreen} onToggleFullscreen={onToggleFullscreen} />;
     case "contact": return <ContactApp />;
     case "browser": return <BrowserApp />;
     case "playground": return <PlaygroundApp />;
@@ -82,6 +83,7 @@ export default function PortfolioShell() {
   const [focusedKey, setFocusedKey] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [restarting, setRestarting] = useState(false);
+  const [booting, setBooting] = useState(true);
   const zCounter = useRef(20);
   const triggerRefs = useRef(new Map<string, HTMLElement>());
   const writtenQuery = useRef<string | null>(null);
@@ -91,8 +93,15 @@ export default function PortfolioShell() {
 
   useEffect(() => () => restartTimers.current.forEach(window.clearTimeout), []);
 
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const timer = window.setTimeout(() => setBooting(false), reducedMotion ? 120 : 1200);
+    return () => window.clearTimeout(timer);
+  }, []);
+
   const focusedWindow = useMemo(() => windows.find((item) => item.key === focusedKey && item.status !== "minimized") ?? null, [focusedKey, windows]);
   const focusedApp = focusedWindow?.kind === "app" && isAppId(focusedWindow.appId ?? null) ? focusedWindow.appId as AppId : focusedWindow?.kind === "project" ? "work" : null;
+  const fullscreenWindow = useMemo(() => windows.find((item) => item.status === "fullscreen") ?? null, [windows]);
 
   const bringToFront = useCallback((key: string) => {
     setWindows((items) => {
@@ -178,6 +187,15 @@ export default function PortfolioShell() {
       if (item.key !== key) return item;
       if (item.status === "maximized") return { ...item, status: "open", bounds: item.restoreBounds ?? item.bounds, restoreBounds: undefined };
       return { ...item, status: "maximized", restoreBounds: item.bounds };
+    }));
+    bringToFront(key);
+  }, [bringToFront]);
+
+  const toggleFullscreen = useCallback((key: string) => {
+    setWindows((items) => items.map((item) => {
+      if (item.key !== key) return item;
+      if (item.status === "fullscreen") return { ...item, status: item.restoreStatus ?? "open", restoreStatus: undefined };
+      return { ...item, status: "fullscreen", restoreStatus: item.status === "maximized" ? "maximized" : "open" };
     }));
     bringToFront(key);
   }, [bringToFront]);
@@ -282,9 +300,18 @@ export default function PortfolioShell() {
     return item.key === focusedKey ? "focused" as const : "open" as const;
   }, [focusedKey, windows]);
 
+  const toggleDockApp = useCallback((app: AppId, trigger?: HTMLElement) => {
+    const item = windows.find((windowItem) => windowItem.appId === app) ?? (app === "work" ? windows.find((windowItem) => windowItem.kind === "project") : undefined);
+    if (item?.key === focusedKey && item.status !== "minimized") {
+      minimizeWindow(item.key);
+      return;
+    }
+    openApp(app, undefined, trigger);
+  }, [focusedKey, minimizeWindow, openApp, windows]);
+
   return (
     <>
-      <SystemMenuBar
+      {!fullscreenWindow && <SystemMenuBar
         activeTitle={focusedWindow?.title ?? "Desktop"}
         focusedApp={focusedApp}
         hasFocusedWindow={Boolean(focusedWindow)}
@@ -294,7 +321,7 @@ export default function PortfolioShell() {
         onShowDesktop={showDesktop}
         onMinimizeFocused={() => focusedKey && minimizeWindow(focusedKey)}
         onRestoreWindows={restoreAll}
-      />
+      />}
       <WindowManager
         windows={windows}
         focusedKey={focusedKey}
@@ -303,6 +330,7 @@ export default function PortfolioShell() {
         onClose={closeWindow}
         onMinimize={minimizeWindow}
         onToggleMaximize={toggleMaximize}
+        onToggleFullscreen={toggleFullscreen}
         onMove={moveWindow}
         onResize={resizeWindow}
         onMobileHome={showDesktop}
@@ -311,12 +339,13 @@ export default function PortfolioShell() {
             const project = getProjectById(item.projectId ?? "");
             return project ? <ProjectPreview project={project} /> : null;
           }
-          return isAppId(item.appId ?? null) ? <AppContent app={item.appId as AppId} technology={item.technology} onOpenApp={openApp} onOpenProject={openProject} onRestart={restartWorkspace} /> : null;
+          return isAppId(item.appId ?? null) ? <AppContent app={item.appId as AppId} technology={item.technology} fullscreen={item.status === "fullscreen"} onOpenApp={openApp} onOpenProject={openProject} onToggleFullscreen={() => toggleFullscreen(item.key)} onRestart={restartWorkspace} /> : null;
         }}
       />
-      <Dock getState={getDockState} onOpenApp={(app, trigger) => openApp(app, undefined, trigger)} onHome={showDesktop} onSearch={(trigger) => { if (trigger) triggerRefs.current.set("search", trigger); setSearchOpen(true); }} />
-      <CommandPalette open={searchOpen} onOpenChange={(open) => { setSearchOpen(open); if (!open) requestAnimationFrame(() => triggerRefs.current.get("search")?.focus()); }} onOpenApp={(app, technology) => openApp(app, technology, triggerRefs.current.get("search"))} />
+      {!fullscreenWindow && <Dock getState={getDockState} onOpenApp={toggleDockApp} onHome={showDesktop} onSearch={(trigger) => { if (trigger) triggerRefs.current.set("search", trigger); setSearchOpen(true); }} />}
+      {!fullscreenWindow && <CommandPalette open={searchOpen} onOpenChange={(open) => { setSearchOpen(open); if (!open) requestAnimationFrame(() => triggerRefs.current.get("search")?.focus()); }} onOpenApp={(app, technology) => openApp(app, technology, triggerRefs.current.get("search"))} />}
       {restarting ? <div className="os-restart-overlay" role="status" aria-live="assertive"><div><strong>KurtOS v2</strong><span>Workspace ready.</span></div></div> : null}
+      {booting ? <div className="os-boot-overlay" role="status" aria-live="polite"><div><strong>KurtOS</strong><span>Initializing Portfolio Workspace…</span><p>Best experienced on a desktop — KurtOS is designed as an interactive workspace.</p></div></div> : null}
     </>
   );
 }

@@ -34,7 +34,7 @@ function fileContent(path: string[]) {
   const joined = path.join("/");
   if (joined === "about/kurt.txt") return [profile.name, profile.role, profile.practices.join(" · "), "", profile.introduction];
   if (joined === "skills/stack.txt") return Array.from(new Set(projects.flatMap((project) => project.technologies))).join(" · ");
-  if (joined === "system/kurtos.conf") return ["# KurtOS System Configuration", "", "SYSTEM_NAME=KurtOS", "VERSION=2", `OWNER=${profile.name}`, "MODE=portfolio", "", "# Recovery", "# Administrative restart:", "# sudo kurtosctl restart"];
+  if (joined === "system/kurtos.conf") return ["# KurtOS System Configuration", "", "SYSTEM_NAME=KurtOS", "VERSION=2", `OWNER=${profile.name}`, "MODE=portfolio", "SYSTEM_CONTROLLER=kurtctl", "", "# Restart", "# sudo kurtctl restart"];
   return null;
 }
 
@@ -50,6 +50,7 @@ export default function TerminalApp({ onOpenApp, onOpenProject, onRestart }: Ter
   const [restarting, setRestarting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
   const timers = useRef<number[]>([]);
 
   useEffect(() => {
@@ -57,7 +58,7 @@ export default function TerminalApp({ onOpenApp, onOpenProject, onRestart }: Ter
     const timerList = timers.current;
     return () => timerList.forEach(window.clearTimeout);
   }, []);
-  useEffect(() => { outputRef.current?.scrollTo({ top: outputRef.current.scrollHeight }); }, [lines]);
+  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "auto", block: "end" }); }, [lines]);
 
   const write = (text: string | string[]) => setLines((current) => [...current, { id: Date.now() + current.length, type: "output", text: Array.isArray(text) ? text.join("\n") : text }]);
   const openTarget = (target: string) => {
@@ -65,6 +66,7 @@ export default function TerminalApp({ onOpenApp, onOpenProject, onRestart }: Ter
     if (normalized === "projects" || normalized === "work") { onOpenApp("work"); return "Opening Work…"; }
     if (normalized === "about") { onOpenApp("about"); return "Opening About…"; }
     if (normalized === "contact") { onOpenApp("contact"); return "Opening Contact…"; }
+    if (normalized === "playground") { onOpenApp("playground"); return "Opening Playground…"; }
     if (normalized === "resume.pdf" || normalized === "resume") { onOpenApp("resume"); return "Opening Resume.pdf…"; }
     const project = projectFiles.find((entry) => entry.name === normalized || entry.project.id === normalized)?.project;
     if (project) { onOpenProject(project.id); return `Opening ${project.title}…`; }
@@ -86,12 +88,12 @@ export default function TerminalApp({ onOpenApp, onOpenProject, onRestart }: Ter
     const [command = "", ...args] = raw.split(/\s+/);
     const argument = args.join(" ");
     const lower = command.toLowerCase();
-    if (raw.toLowerCase() === "sudo kurtosctl restart") { beginRestart(); return; }
+    if (raw.toLowerCase() === "sudo kurtctl restart") { beginRestart(); return; }
     if (raw === "rm -rf /" || raw === "rm -rf /") { write("Permission denied.\nPortfolio files are read-only in visitor mode."); return; }
-    if (raw.toLowerCase() === "sudo reboot") { write("KurtOS: unsupported system command.\nHint: KurtOS uses its own system controller."); return; }
+    if (raw.toLowerCase() === "sudo reboot") { write("KurtOS uses its own system controller.\nTry `help`."); return; }
     if (raw.toLowerCase() === "sudo su") { write("Privilege escalation unavailable in visitor sessions."); return; }
     switch (lower) {
-      case "help": write(["KurtOS COMMANDS", "", "NAVIGATION", "  ls [directory]     List files", "  cd <directory>     Change directory", "  pwd                Print current directory", "  cat <file>         Read a file", "  open <target>      Open a PortfolioOS item", "", "PORTFOLIO", "  whoami             Display portfolio identity", "  projects           List project files", "  skills             Display technologies", "", "SYSTEM", "  clear              Clear terminal", "  kurtosctl status   Show KurtOS status"]); return;
+      case "help": write(["KurtOS COMMANDS", "", "NAVIGATION", "  ls [directory]     List files", "  cd <directory>     Change directory", "  pwd                Print current directory", "  cat <file>         Read a file", "  open <target>      Open a PortfolioOS item", "", "PORTFOLIO", "  whoami             Display portfolio identity", "  projects           List project files", "  skills             Display technologies", "", "SYSTEM", "  clear              Clear terminal", "  kurtctl status     Show KurtOS status", "", "TRY THIS COMMAND AND FIND OUT :>", "", "  sudo kurtctl restart"]); return;
       case "clear": setLines([]); return;
       case "whoami": write([profile.name, profile.role, profile.practices.join(" · ")]); return;
       case "pwd": write(absolutePath(cwd)); return;
@@ -113,15 +115,15 @@ export default function TerminalApp({ onOpenApp, onOpenProject, onRestart }: Ter
       case "projects": write(projectFiles.map((entry) => `${entry.name}  ${entry.project.title}`)); return;
       case "skills": write(Array.from(new Set(projects.flatMap((project) => project.technologies))).join(" · ")); return;
       case "open": if (!argument) { write("open: missing target"); return; } write(openTarget(argument)); return;
-      case "kurtosctl": if (argument.toLowerCase() === "status") { write(["KurtOS v2", "Status: ONLINE", "Workspace: Portfolio", "Session: visitor", `Projects mounted: ${projects.length}`, "Recovery configuration: /KurtOS/system/kurtos.conf"]); return; } write(`kurtosctl: unsupported command: ${argument || "(none)"}`); return;
+      case "kurtctl": if (argument.toLowerCase() === "status") { write(["KurtOS v2", "Status: ONLINE", "Workspace: Portfolio", "Session: visitor", `Projects mounted: ${projects.length}`, "Recovery configuration: /KurtOS/system/kurtos.conf"]); return; } write(`kurtctl: unsupported command: ${argument || "(none)"}`); return;
       default: write(`command not found: ${command}\nType \`help\` for available commands.`);
     }
   };
 
   return <section className="os-terminal" aria-label="KurtOS Terminal">
-    <div className="os-terminal-output" ref={outputRef} role="log" aria-live="polite" aria-label="Terminal command history">
+    <div className="os-terminal-output" ref={outputRef} role="log" aria-live="polite" aria-label="Terminal command history" onPointerDown={(event) => { if (event.target === event.currentTarget) inputRef.current?.focus(); }}>
       {lines.map((line) => <pre className={`os-terminal-line is-${line.type}`} key={line.id}>{line.text}</pre>)}
-      <form className="os-terminal-prompt" onSubmit={(event) => { event.preventDefault(); execute(); }}><span aria-hidden="true">visitor@KurtOS:{pathLabel(cwd)}$</span><label className="sr-only" htmlFor="kurtos-command">KurtOS command</label><input id="kurtos-command" ref={inputRef} value={input} disabled={restarting} autoComplete="off" spellCheck="false" onChange={(event) => setInput(event.target.value)} onKeyDown={(event) => { if (event.key === "ArrowUp") { event.preventDefault(); const index = historyIndex === null ? history.length - 1 : Math.max(0, historyIndex - 1); setHistoryIndex(index); setInput(history[index] ?? ""); } else if (event.key === "ArrowDown") { event.preventDefault(); if (historyIndex === null) return; const index = historyIndex + 1; if (index >= history.length) { setHistoryIndex(null); setInput(""); } else { setHistoryIndex(index); setInput(history[index]); } } else if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "l") { event.preventDefault(); setLines([]); }}} /><i aria-hidden="true" /></form>
+      <form className="os-terminal-prompt" onSubmit={(event) => { event.preventDefault(); execute(); }}><span aria-hidden="true">visitor@KurtOS:{pathLabel(cwd)}$</span><label className="sr-only" htmlFor="kurtos-command">KurtOS command</label><input id="kurtos-command" ref={inputRef} value={input} disabled={restarting} autoComplete="off" spellCheck="false" onChange={(event) => setInput(event.target.value)} onKeyDown={(event) => { if (event.key === "ArrowUp") { event.preventDefault(); const index = historyIndex === null ? history.length - 1 : Math.max(0, historyIndex - 1); setHistoryIndex(index); setInput(history[index] ?? ""); } else if (event.key === "ArrowDown") { event.preventDefault(); if (historyIndex === null) return; const index = historyIndex + 1; if (index >= history.length) { setHistoryIndex(null); setInput(""); } else { setHistoryIndex(index); setInput(history[index]); } } else if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "l") { event.preventDefault(); setLines([]); }}} /><i aria-hidden="true" /></form><div ref={bottomRef} aria-hidden="true" />
     </div>
   </section>;
 }

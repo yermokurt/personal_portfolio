@@ -2,13 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import type { PointerEvent, ReactNode } from "react";
-import { Maximize2, Minimize2, PanelsTopLeft, X } from "lucide-react";
+import { Expand, Maximize2, Minimize2, PanelsTopLeft, X } from "lucide-react";
 
 export type WindowBounds = { x: number; y: number; width: number; height: number };
 export const MIN_WINDOW_WIDTH = 440;
 export const MIN_WINDOW_HEIGHT = 320;
 export type ResizeDirection = "n" | "s" | "e" | "w" | "ne" | "nw" | "se" | "sw";
-export type WindowStatus = "open" | "minimized" | "maximized";
+export type WindowStatus = "open" | "minimized" | "maximized" | "fullscreen";
 export type ManagedWindow = {
   key: string;
   kind: "app" | "project";
@@ -20,6 +20,7 @@ export type ManagedWindow = {
   status: WindowStatus;
   bounds: WindowBounds;
   restoreBounds?: WindowBounds;
+  restoreStatus?: "open" | "maximized";
   zIndex: number;
 };
 
@@ -31,13 +32,14 @@ type AppWindowProps = {
   onClose: () => void;
   onMinimize: () => void;
   onToggleMaximize: () => void;
+  onToggleFullscreen: () => void;
   onMove: (x: number, y: number) => void;
   onResize: (bounds: WindowBounds) => void;
   onMobileHome: () => void;
   children: ReactNode;
 };
 
-export default function AppWindow({ window: item, focused, mobile, onFocus, onClose, onMinimize, onToggleMaximize, onMove, onResize, onMobileHome, children }: AppWindowProps) {
+export default function AppWindow({ window: item, focused, mobile, onFocus, onClose, onMinimize, onToggleMaximize, onToggleFullscreen, onMove, onResize, onMobileHome, children }: AppWindowProps) {
   const rootRef = useRef<HTMLElement>(null);
   const dragRef = useRef<{ pointerId: number; offsetX: number; offsetY: number } | null>(null);
   const resizeRef = useRef<{ pointerId: number; direction: ResizeDirection; startX: number; startY: number; bounds: WindowBounds } | null>(null);
@@ -49,8 +51,15 @@ export default function AppWindow({ window: item, focused, mobile, onFocus, onCl
 
   useEffect(() => () => { dragRef.current = null; resizeRef.current = null; }, []);
 
+  useEffect(() => {
+    if (item.status !== "fullscreen") return;
+    const exitOnEscape = (event: KeyboardEvent) => { if (event.key === "Escape") { event.preventDefault(); onToggleFullscreen(); } };
+    window.addEventListener("keydown", exitOnEscape);
+    return () => window.removeEventListener("keydown", exitOnEscape);
+  }, [item.status, onToggleFullscreen]);
+
   function startDrag(event: PointerEvent<HTMLDivElement>) {
-    if (mobile || item.status === "maximized" || (event.target as Element).closest("button, a, input")) return;
+    if (mobile || item.status !== "open" || (event.target as Element).closest("button, a, input")) return;
     dragRef.current = { pointerId: event.pointerId, offsetX: event.clientX - item.bounds.x, offsetY: event.clientY - item.bounds.y };
     event.currentTarget.setPointerCapture(event.pointerId);
     onFocus();
@@ -107,8 +116,8 @@ export default function AppWindow({ window: item, focused, mobile, onFocus, onCl
   return (
     <section
       ref={rootRef}
-      className={`os-app-window ${focused ? "is-focused" : ""} ${item.status === "maximized" ? "is-maximized" : ""} ${item.appId === "browser" ? "is-browser" : ""}`}
-      style={item.status === "maximized" || mobile ? { zIndex: item.zIndex } : { left: item.bounds.x, top: item.bounds.y, width: item.bounds.width, height: item.bounds.height, zIndex: item.zIndex }}
+      className={`os-app-window ${focused ? "is-focused" : ""} ${item.status === "maximized" ? "is-maximized" : ""} ${item.status === "fullscreen" ? "is-fullscreen" : ""} ${item.appId === "browser" ? "is-browser" : ""}`}
+      style={item.status === "maximized" || item.status === "fullscreen" || mobile ? { zIndex: item.zIndex } : { left: item.bounds.x, top: item.bounds.y, width: item.bounds.width, height: item.bounds.height, zIndex: item.zIndex }}
       role="dialog"
       aria-modal="false"
       aria-labelledby={`window-title-${item.key}`}
@@ -116,7 +125,7 @@ export default function AppWindow({ window: item, focused, mobile, onFocus, onCl
       tabIndex={-1}
       onPointerDown={onFocus}
     >
-      {!mobile && item.status !== "maximized" ? (["n", "s", "e", "w", "ne", "nw", "se", "sw"] as ResizeDirection[]).map((direction) => (
+      {!mobile && item.status === "open" ? (["n", "s", "e", "w", "ne", "nw", "se", "sw"] as ResizeDirection[]).map((direction) => (
         <div
           key={direction}
           className={`os-window-resize-handle os-window-resize-${direction}`}
@@ -129,7 +138,7 @@ export default function AppWindow({ window: item, focused, mobile, onFocus, onCl
         />
       )) : null}
       <div className="os-app-window-titlebar" onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={endDrag} onPointerCancel={endDrag}>
-        <button className="os-window-home" type="button" onClick={onMobileHome} aria-label="Return to PortfolioOS Home">
+        <button className="os-window-home" type="button" onClick={onMobileHome} aria-label="Return to KurtOS Home">
           <PanelsTopLeft size={18} aria-hidden="true" /><span>Home</span>
         </button>
         <div className="os-app-window-title">
@@ -137,9 +146,10 @@ export default function AppWindow({ window: item, focused, mobile, onFocus, onCl
           <h2 id={`window-title-${item.key}`}>{item.title}</h2>
         </div>
         <div className="os-app-window-controls">
-          <button type="button" onPointerDown={(event) => event.stopPropagation()} onClick={onMinimize} aria-label={`Minimize ${item.title}`}><Minimize2 size={17} aria-hidden="true" /></button>
-          <button type="button" onPointerDown={(event) => event.stopPropagation()} onClick={onToggleMaximize} aria-label={item.status === "maximized" ? `Restore ${item.title}` : `Maximize ${item.title}`}><Maximize2 size={16} aria-hidden="true" /></button>
-          <button type="button" onPointerDown={(event) => event.stopPropagation()} onClick={onClose} aria-label={`Close ${item.title}`}><X size={18} aria-hidden="true" /></button>
+          {item.status !== "fullscreen" && <button type="button" onPointerDown={(event) => event.stopPropagation()} onClick={onMinimize} aria-label={`Minimize ${item.title}`}><Minimize2 size={17} aria-hidden="true" /></button>}
+          {!mobile && item.status !== "fullscreen" && <button type="button" onPointerDown={(event) => event.stopPropagation()} onClick={onToggleMaximize} aria-label={item.status === "maximized" ? `Restore ${item.title}` : `Maximize ${item.title}`}><Maximize2 size={16} aria-hidden="true" /></button>}
+          {!mobile && <button className="os-window-fullscreen" type="button" onPointerDown={(event) => event.stopPropagation()} onClick={onToggleFullscreen} aria-label={item.status === "fullscreen" ? `Exit fullscreen for ${item.title}` : `Enter fullscreen for ${item.title}`}>{item.status === "fullscreen" ? <span>Exit fullscreen</span> : <Expand size={16} aria-hidden="true" />}</button>}
+          <button className="os-window-close" type="button" onPointerDown={(event) => event.stopPropagation()} onClick={onClose} aria-label={`Close ${item.title}`}><X size={18} aria-hidden="true" /></button>
         </div>
       </div>
       <div className="os-app-window-body" data-lenis-prevent>{children}</div>

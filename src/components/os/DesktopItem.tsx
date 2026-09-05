@@ -1,15 +1,16 @@
 "use client";
 
 import type { KeyboardEvent, PointerEvent } from "react";
-import { FileText, FlaskConical, FolderOpen, PanelsTopLeft, type LucideIcon } from "lucide-react";
+import { FileText, FlaskConical, FolderOpen, PanelsTopLeft, Terminal, type LucideIcon } from "lucide-react";
 
-export type DesktopItemKind = "folder" | "project" | "document" | "playground";
+export type DesktopItemKind = "folder" | "project" | "document" | "playground" | "terminal";
 
 const icons: Record<DesktopItemKind, LucideIcon> = {
   folder: FolderOpen,
   project: PanelsTopLeft,
   document: FileText,
   playground: FlaskConical,
+  terminal: Terminal,
 };
 
 type DesktopItemProps = {

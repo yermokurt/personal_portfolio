@@ -12,12 +12,13 @@ type WindowManagerProps = {
   onClose: (key: string) => void;
   onMinimize: (key: string) => void;
   onToggleMaximize: (key: string) => void;
+  onToggleFullscreen: (key: string) => void;
   onMove: (key: string, x: number, y: number) => void;
   onResize: (key: string, bounds: WindowBounds) => void;
   onMobileHome: () => void;
 };
 
-export default function WindowManager({ windows, focusedKey, mobile, renderContent, onFocus, onClose, onMinimize, onToggleMaximize, onMove, onResize, onMobileHome }: WindowManagerProps) {
+export default function WindowManager({ windows, focusedKey, mobile, renderContent, onFocus, onClose, onMinimize, onToggleMaximize, onToggleFullscreen, onMove, onResize, onMobileHome }: WindowManagerProps) {
   return (
     <div className="os-window-layer" aria-live="polite">
       {windows.map((item) => item.status === "minimized" || (mobile && item.key !== focusedKey) ? null : (
@@ -30,6 +31,7 @@ export default function WindowManager({ windows, focusedKey, mobile, renderConte
           onClose={() => onClose(item.key)}
           onMinimize={() => onMinimize(item.key)}
           onToggleMaximize={() => onToggleMaximize(item.key)}
+          onToggleFullscreen={() => onToggleFullscreen(item.key)}
           onMove={(x, y) => onMove(item.key, x, y)}
           onResize={(bounds) => onResize(item.key, bounds)}
           onMobileHome={onMobileHome}

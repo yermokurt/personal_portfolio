@@ -15,6 +15,6 @@ export default function LegacyLayout({ children }: { children: React.ReactNode }
     <Navbar />
     <main>{children}</main>
     <Footer />
-    <Link href="/" className="fixed bottom-5 right-5 z-[1200] rounded-full border border-white/20 bg-[#111120] px-5 py-3 text-sm text-white shadow-xl">Return to PortfolioOS V2 ↗</Link>
+    <Link href="/" className="fixed bottom-5 right-5 z-[1200] rounded-full border border-white/20 bg-[#111120] px-5 py-3 text-sm text-white shadow-xl">Return to KurtOS ↗</Link>
   </LenisProvider>;
 }

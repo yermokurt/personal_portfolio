@@ -23,6 +23,7 @@ const desktopItems: Array<{ id: string; label: string; kind: DesktopItemKind; op
   { id: "1pm-club", label: "1PMClub.project", kind: "project", open: () => emit(OS_EVENT.openProject, { project: "1pm-club" }) },
   { id: "resume", label: "Resume.pdf", kind: "document", open: () => emit(OS_EVENT.openApp, { app: "resume" }) },
   { id: "playground", label: "Playground/", kind: "playground", open: () => emit(OS_EVENT.openApp, { app: "playground" }) },
+  { id: "terminal", label: "Terminal.app", kind: "terminal", open: () => emit(OS_EVENT.openApp, { app: "terminal" }) },
 ];
 
 const launcherItems = [

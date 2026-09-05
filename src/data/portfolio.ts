@@ -16,7 +16,7 @@ export const applications = [
   { id: "about", title: "About", description: "The person behind the work", code: "02" },
   { id: "experience", title: "Experience", description: "A log of professional work", code: "03" },
   { id: "tech", title: "Tech Explorer", description: "Tools connected to projects", code: "04" },
-  { id: "resume", title: "Resume.pdf", description: "Open my professional resume", code: "05" },
+  { id: "resume", title: "Resume.pdf", description: "View my professional resume", code: "05" },
   { id: "contact", title: "Contact", description: "Start a conversation", code: "06" },
   { id: "browser", title: "Browser", description: "A directory of portfolio destinations", code: "07" },
   { id: "playground", title: "Playground", description: "Small games and experiments", code: "08" },

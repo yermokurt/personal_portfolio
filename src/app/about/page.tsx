@@ -14,7 +14,7 @@ export default function AboutPage() {
     <main className="os-route">
       <nav className="os-route-nav">
         <Link href="/">
-          <ArrowLeft size={18} /> PortfolioOS
+          <ArrowLeft size={18} /> KurtOS
         </Link>
         <span>About / Profile</span>
       </nav>

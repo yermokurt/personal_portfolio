@@ -2,7 +2,7 @@ import Image from "next/image";
 import portrait from "@/assets/profile.jpeg";
 import { profile } from "@/data/portfolio";
 import { experiences } from "@/data/experience";
-import { contactInfo, getEnabledLinks } from "@/data/socialLinks";
+import { getEnabledLinks } from "@/data/socialLinks";
 import { services } from "@/data/services";
 
 export function AboutApp() {
@@ -24,8 +24,4 @@ export function ExperienceApp() {
       <ul>{entry.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ul>
     </article>)}</div>
   </div></div>;
-}
-
-export function ResumeApp() {
-  return <div className="os-prose os-document"><span className="os-document-icon" aria-hidden="true">PDF</span><span className="os-eyebrow">Professional document</span><h2>Resume.pdf</h2><p>{profile.name}<br />{profile.role}</p><p>Read the current resume in Google Drive. Its document viewer also provides a download option.</p><a className="os-button os-primary" href={contactInfo.resumeUrl} target="_blank" rel="noopener noreferrer">Open resume ↗</a></div>;
 }
