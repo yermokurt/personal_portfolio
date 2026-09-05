@@ -1,33 +1,10 @@
-# Kurt Yermo — Portfolio
+# PortfolioOS
 
-A personal portfolio  myself, Kurt Collin G. Yermo, a UI/UX designer and frontend developer. It presents selected work in web products, systems, branding, and design through project galleries and case-study details.
+PortfolioOS is Kurt Collin G. Yermo’s personal portfolio, imagined as a working desktop rather than a conventional landing page. Projects sit on the desktop as files, portfolio sections open as applications, and case studies remain available through direct web routes.
 
-## Highlights
+The work centers on practical products and systems: MotoWatch explores computer vision, TaiSync coordinates group travel, 1PM Club supports café pre-orders, and SFS50 and PostPal document earlier web-system work. The original single-page portfolio remains preserved at `/legacy` as part of the project’s history.
 
-- Responsive single-page portfolio with smooth section navigation
-- Project filtering, live demos, galleries, and case-study modals
-- Contact form with validation, disposable-email checks, optional rate limiting, and Resend email delivery
-- Accessible interaction states and a focused dark visual system
+Built with Next.js, React, TypeScript, Tailwind CSS, Radix UI, Zod, Resend and Upstash. The current version is deployed at [yermokurtportfolio.vercel.app](https://yermokurtportfolio.vercel.app/).
 
-## Built with
-
-Next.js, React, TypeScript, Tailwind CSS, Framer Motion, React Hook Form, Zod, Resend, and Upstash.
-
-## Local development
-
-```bash
-npm install
-npm run dev
-```
-
-The site runs at `http://localhost:3000` by default but it is deployed at https://yermokurtportfolio.vercel.app/
-
-## Scripts
-
-```bash
-npm run dev    # Start the development server
-npm run lint   # Check code quality
-npm run build  # Create a production build
-```
-
+The repository includes the desktop experience, standalone work and profile routes, a foundation for future experiments, and a contact flow designed for production delivery and abuse protection.
 

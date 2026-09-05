@@ -57,7 +57,7 @@ export const socialLinks: SocialLink[] = [
 
 export const contactInfo = {
   email: "yermokurt8@gmail.com",
-  resumeUrl: "https://drive.google.com/file/d/1mvblvGnWM6G29APJqNxHq_tPrquhhAek/view?usp=sharing",
+  resumeUrl: "https://drive.google.com/file/d/1AqaoxEIWVgYiFz8QV4t0UP2XRPEK8qqp/view?usp=sharing",
 };
 
 export const getEnabledLinks = () => socialLinks.filter((l) => l.enabled && l.url);

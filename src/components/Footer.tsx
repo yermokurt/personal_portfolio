@@ -38,6 +38,7 @@ export default function Footer() {
                   src={logoImg}
                   alt="Kurt Yermo Logo"
                   fill
+                  sizes="28px"
                   className="object-contain"
                 />
               </div>

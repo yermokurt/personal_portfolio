@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { useForm, useWatch } from "react-hook-form";
 import { slideInLeft, slideInRight } from "@/animations/variants";
 import { viewportConfig } from "@/animations/transitions";
 import SectionHeader from "@/components/SectionHeader";
@@ -11,20 +10,11 @@ import SocialLinkComponent from "@/components/SocialLink";
 import { contactInfo, getEnabledLinks } from "@/data/socialLinks";
 import { FiSend, FiMail } from "react-icons/fi";
 import { cn } from "@/lib/utils";
-
-// Frontend validation schema
-const contactFormSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  email: z.string().email({ message: "Invalid email address." }),
-  subject: z.string().min(3, { message: "Subject must be at least 3 characters." }),
-  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
-});
-
-type ContactFormData = z.infer<typeof contactFormSchema>;
+import { contactSchema, type ContactFormData } from "@/lib/contact-schema";
 
 // Lightweight self-contained resolver to eliminate heavy package resolvers
 const customZodResolver = async (data: unknown) => {
-  const result = contactFormSchema.safeParse(data);
+  const result = contactSchema.safeParse(data);
   if (result.success) {
     return { values: result.data, errors: {} };
   }
@@ -46,7 +36,7 @@ export default function ContactSection() {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     formState: { errors, isSubmitting },
     reset,
   } = useForm<ContactFormData>({
@@ -54,7 +44,7 @@ export default function ContactSection() {
     defaultValues: { name: "", email: "", subject: "", message: "" },
   });
 
-  const formValues = watch();
+  const formValues = useWatch({ control });
 
   const onSubmit = async (data: ContactFormData) => {
     setSubmitStatus({ type: null, message: "" });

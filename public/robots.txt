@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kurtyermo.dev/sitemap.xml
+Sitemap: https://yermokurtportfolio.vercel.app/sitemap.xml

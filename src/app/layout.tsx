@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import LenisProvider from "@/components/LenisProvider";
+import { siteUrl } from "@/lib/site";
+import "@/components/os/os.css";
+import "@/components/os/apps.css";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -18,7 +18,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Kurt Collin G. Yermo — UI/UX Designer & Frontend Developer",
+  title: "PortfolioOS — Kurt Collin G. Yermo",
   description:
     "Portfolio of Kurt Collin G. Yermo — UI/UX designer and frontend developer building practical web products and systems.",
   keywords: [
@@ -35,21 +35,22 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Kurt Collin G. Yermo" }],
   creator: "Kurt Collin G. Yermo",
-  metadataBase: new URL("https://kurtyermo.dev"),
+  metadataBase: new URL(siteUrl),
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Kurt Collin G. Yermo — UI/UX Designer & Frontend Developer",
+    title: "PortfolioOS — Kurt Collin G. Yermo",
     description:
       "UI/UX designer and frontend developer building practical web products and systems.",
-    url: "https://kurtyermo.dev",
-    siteName: "Kurt Yermo Portfolio",
+    url: siteUrl,
+    siteName: "PortfolioOS by Kurt Yermo",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kurt Collin G. Yermo — UI/UX Designer & Frontend Developer",
+    title: "PortfolioOS — Kurt Collin G. Yermo",
     description:
-      "IT Student, UI/UX Designer, Frontend Developer & Graphic Designer.",
+      "Designer and developer building practical digital products, web systems and AI-assisted tools.",
   },
   robots: {
     index: true,
@@ -72,20 +73,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning>
       <body className="antialiased">
-        <LenisProvider>
-          {/* Top ambient blur & solid background fade mask */}
-          <div 
-            className="fixed top-0 left-0 right-0 h-[125px] pointer-events-none z-40 select-none"
-            style={{
-              background: "linear-gradient(to bottom, #0a0a0f 0%, #0a0a0f 60px, rgba(10, 10, 15, 0.93) 85px, rgba(10, 10, 15, 0) 125px)",
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
-            }}
-          />
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-        </LenisProvider>
+        {children}
       </body>
     </html>
   );
