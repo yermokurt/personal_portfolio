@@ -6,11 +6,14 @@ import { applications, type AppId, isAppId } from "@/data/portfolio";
 import { getProjectById } from "@/data/projects";
 import CommandPalette from "./CommandPalette";
 import ContactApp from "./ContactApp";
+import BrowserApp from "./BrowserApp";
 import Dock from "./Dock";
 import { OS_EVENT } from "./DesktopCanvas";
 import { MIN_WINDOW_HEIGHT, MIN_WINDOW_WIDTH, type ManagedWindow, type WindowBounds } from "./AppWindow";
 import ProjectPreview from "./ProjectPreview";
-import { AboutApp, BrowserApp, ExperienceApp, ResumeApp, TerminalApp } from "./StaticApps";
+import PlaygroundApp from "./PlaygroundApp";
+import TerminalApp from "./TerminalApp";
+import { AboutApp, ExperienceApp, ResumeApp } from "./StaticApps";
 import SystemMenuBar from "./SystemMenuBar";
 import TechExplorer from "./TechExplorer";
 import WindowManager from "./WindowManager";
@@ -19,7 +22,7 @@ import WorkApp from "./WorkApp";
 const MENU_HEIGHT = 46;
 const DOCK_RESERVE = 92;
 
-function AppContent({ app, technology }: { app: AppId; technology?: string }) {
+function AppContent({ app, technology, onOpenApp, onOpenProject, onRestart }: { app: AppId; technology?: string; onOpenApp: (app: AppId) => void; onOpenProject: (projectId: string) => void; onRestart: () => void }) {
   switch (app) {
     case "work": return <WorkApp />;
     case "about": return <AboutApp />;
@@ -28,7 +31,8 @@ function AppContent({ app, technology }: { app: AppId; technology?: string }) {
     case "resume": return <ResumeApp />;
     case "contact": return <ContactApp />;
     case "browser": return <BrowserApp />;
-    case "terminal": return <TerminalApp />;
+    case "playground": return <PlaygroundApp />;
+    case "terminal": return <TerminalApp onOpenApp={onOpenApp} onOpenProject={onOpenProject} onRestart={onRestart} />;
   }
 }
 
@@ -77,11 +81,15 @@ export default function PortfolioShell() {
   const [windows, setWindows] = useState<ManagedWindow[]>([]);
   const [focusedKey, setFocusedKey] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [restarting, setRestarting] = useState(false);
   const zCounter = useRef(20);
   const triggerRefs = useRef(new Map<string, HTMLElement>());
   const writtenQuery = useRef<string | null>(null);
   const applyingUrl = useRef(false);
   const previousMobile = useRef(mobile);
+  const restartTimers = useRef<number[]>([]);
+
+  useEffect(() => () => restartTimers.current.forEach(window.clearTimeout), []);
 
   const focusedWindow = useMemo(() => windows.find((item) => item.key === focusedKey && item.status !== "minimized") ?? null, [focusedKey, windows]);
   const focusedApp = focusedWindow?.kind === "app" && isAppId(focusedWindow.appId ?? null) ? focusedWindow.appId as AppId : focusedWindow?.kind === "project" ? "work" : null;
@@ -128,6 +136,16 @@ export default function PortfolioShell() {
   const showDesktop = useCallback(() => {
     setWindows((items) => items.map((item) => item.status === "minimized" ? item : { ...item, status: "minimized", restoreBounds: item.status === "maximized" ? item.restoreBounds ?? item.bounds : item.restoreBounds }));
     setFocusedKey(null);
+  }, []);
+
+  const restartWorkspace = useCallback(() => {
+    setRestarting(true);
+    restartTimers.current.push(window.setTimeout(() => {
+      setWindows([]);
+      setFocusedKey(null);
+      setSearchOpen(false);
+    }, 380));
+    restartTimers.current.push(window.setTimeout(() => setRestarting(false), 1050));
   }, []);
 
   const closeWindow = useCallback((key: string) => {
@@ -293,11 +311,12 @@ export default function PortfolioShell() {
             const project = getProjectById(item.projectId ?? "");
             return project ? <ProjectPreview project={project} /> : null;
           }
-          return isAppId(item.appId ?? null) ? <AppContent app={item.appId as AppId} technology={item.technology} /> : null;
+          return isAppId(item.appId ?? null) ? <AppContent app={item.appId as AppId} technology={item.technology} onOpenApp={openApp} onOpenProject={openProject} onRestart={restartWorkspace} /> : null;
         }}
       />
       <Dock getState={getDockState} onOpenApp={(app, trigger) => openApp(app, undefined, trigger)} onHome={showDesktop} onSearch={(trigger) => { if (trigger) triggerRefs.current.set("search", trigger); setSearchOpen(true); }} />
       <CommandPalette open={searchOpen} onOpenChange={(open) => { setSearchOpen(open); if (!open) requestAnimationFrame(() => triggerRefs.current.get("search")?.focus()); }} onOpenApp={(app, technology) => openApp(app, technology, triggerRefs.current.get("search"))} />
+      {restarting ? <div className="os-restart-overlay" role="status" aria-live="assertive"><div><strong>KurtOS v2</strong><span>Workspace ready.</span></div></div> : null}
     </>
   );
 }

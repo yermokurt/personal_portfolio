@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, FlaskConical, Gamepad2, Wrench } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import PlaygroundApp from "@/components/os/PlaygroundApp";
 
-export const metadata: Metadata = { title:"Playground — Kurt Yermo", description:"A foundation for future experiments, games and developer tools.", robots:{ index:false, follow:true } };
-export default function PlaygroundPage() { return <main className="os-route"><nav className="os-route-nav"><Link href="/"><ArrowLeft size={18} /> PortfolioOS</Link><span>Playground / Foundation</span></nav><header className="os-route-intro"><span className="os-eyebrow">Experiments directory</span><h1>Playground<span className="os-accent">.</span></h1><p>This folder is ready for small experiments, games and developer tools. The first executable is still being built.</p></header><div className="os-foundation-grid"><article><FlaskConical /><h2>Experiments/</h2><p>Interaction ideas and visual prototypes.</p><span>Empty folder</span></article><article><Gamepad2 /><h2>Games/</h2><p>Small portfolio games will live here.</p><span>Empty folder</span></article><article><Wrench /><h2>Developer Tools/</h2><p>Utilities created while building products.</p><span>Empty folder</span></article></div></main>; }
+export const metadata: Metadata = { title: "Playground — Kurt Yermo", description: "Small games and interactive experiments by Kurt Yermo.", robots: { index: false, follow: true } };
+
+export default function PlaygroundPage() {
+  return <main className="os-route os-playground-route"><nav className="os-route-nav"><Link href="/"><ArrowLeft size={18} /> PortfolioOS</Link><span>Playground</span></nav><PlaygroundApp /></main>;
+}

@@ -22,7 +22,7 @@ const desktopItems: Array<{ id: string; label: string; kind: DesktopItemKind; op
   { id: "taisync", label: "TaiSync.project", kind: "project", open: () => emit(OS_EVENT.openProject, { project: "taisync" }) },
   { id: "1pm-club", label: "1PMClub.project", kind: "project", open: () => emit(OS_EVENT.openProject, { project: "1pm-club" }) },
   { id: "resume", label: "Resume.pdf", kind: "document", open: () => emit(OS_EVENT.openApp, { app: "resume" }) },
-  { id: "playground", label: "Playground/", kind: "playground", open: () => window.location.assign("/playground") },
+  { id: "playground", label: "Playground/", kind: "playground", open: () => emit(OS_EVENT.openApp, { app: "playground" }) },
 ];
 
 const launcherItems = [
@@ -30,7 +30,7 @@ const launcherItems = [
   { label: "About", app: "about", Icon: Info },
   { label: "Experience", app: "experience", Icon: Network },
   { label: "Tech", app: "tech", Icon: Code2 },
-  { label: "Playground", href: "/playground", Icon: FlaskConical },
+  { label: "Playground", app: "playground", Icon: FlaskConical },
   { label: "Contact", app: "contact", Icon: Mail },
   { label: "Browser", app: "browser", Icon: Globe2 },
 ] as const;
@@ -98,11 +98,9 @@ export default function DesktopCanvas() {
         <div className="os-mobile-section-heading"><h2 id="os-launcher-title">Applications</h2><span>Open an app</span></div>
         <div className="os-mobile-app-grid">
           {launcherItems.map((launcher) => {
-            const { label, Icon } = launcher;
-            const href = "href" in launcher ? launcher.href : undefined;
-            const app = "app" in launcher ? launcher.app : undefined;
+            const { label, Icon, app } = launcher;
             return (
-              <button key={label} type="button" onClick={() => href ? window.location.assign(href) : app ? emit(OS_EVENT.openApp, { app }) : undefined}>
+              <button key={label} type="button" onClick={() => emit(OS_EVENT.openApp, { app })}>
                 <span><Icon size={23} aria-hidden="true" /></span>{label}
               </button>
             );

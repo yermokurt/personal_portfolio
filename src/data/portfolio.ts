@@ -19,7 +19,8 @@ export const applications = [
   { id: "resume", title: "Resume.pdf", description: "Open my professional resume", code: "05" },
   { id: "contact", title: "Contact", description: "Start a conversation", code: "06" },
   { id: "browser", title: "Browser", description: "A directory of portfolio destinations", code: "07" },
-  { id: "terminal", title: "Terminal", description: "Command navigation · planned", code: "08" },
+  { id: "playground", title: "Playground", description: "Small games and experiments", code: "08" },
+  { id: "terminal", title: "Terminal", description: "A simulated KurtOS portfolio shell", code: "09" },
 ] as const;
 
 export type AppId = (typeof applications)[number]["id"];

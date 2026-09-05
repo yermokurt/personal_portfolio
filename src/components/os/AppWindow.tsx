@@ -107,7 +107,7 @@ export default function AppWindow({ window: item, focused, mobile, onFocus, onCl
   return (
     <section
       ref={rootRef}
-      className={`os-app-window ${focused ? "is-focused" : ""} ${item.status === "maximized" ? "is-maximized" : ""}`}
+      className={`os-app-window ${focused ? "is-focused" : ""} ${item.status === "maximized" ? "is-maximized" : ""} ${item.appId === "browser" ? "is-browser" : ""}`}
       style={item.status === "maximized" || mobile ? { zIndex: item.zIndex } : { left: item.bounds.x, top: item.bounds.y, width: item.bounds.width, height: item.bounds.height, zIndex: item.zIndex }}
       role="dialog"
       aria-modal="false"

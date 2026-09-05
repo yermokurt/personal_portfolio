@@ -102,13 +102,13 @@ export default function SystemMenuBar({ activeTitle, focusedApp, hasFocusedWindo
   return (
     <header className="os-system-bar">
       <div className="os-system-bar-left">
-        <button className="os-system-brand" type="button" onClick={onShowDesktop} aria-label="Show PortfolioOS desktop"><Image src={logo} alt="" width={22} height={18} /><strong>Kurt&apos;s Portfolio</strong></button>
+        <button className="os-system-brand" type="button" onClick={onShowDesktop} aria-label="Show PortfolioOS desktop"><Image src={logo} alt="" width={22} height={18} /><strong>KurtOS Portfolio</strong></button>
         <button type="button" className={focusedApp === "work" ? "is-current" : ""} onClick={(event) => onOpenApp("work", event.currentTarget)}>Work</button>
         <Menu label="Navigate">{(close, trigger) => <MenuItems items={[
           { label: "About", action: () => onOpenApp("about", trigger ?? undefined) },
           { label: "Experience", action: () => onOpenApp("experience", trigger ?? undefined) },
           { label: "Tech Explorer", action: () => onOpenApp("tech", trigger ?? undefined) },
-          { label: "Playground", href: "/playground" },
+          { label: "Playground", action: () => onOpenApp("playground", trigger ?? undefined) },
           { label: "Contact", action: () => onOpenApp("contact", trigger ?? undefined) },
           { label: "Portfolio V1", href: "/legacy" },
         ]} close={close} />}</Menu>

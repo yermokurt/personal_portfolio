@@ -125,7 +125,7 @@ export default function ContactApp() {
 
   return (
     <section className="os-app os-contact-app" aria-labelledby="os-contact-title">
-      <header className="os-app-header">
+      <div className="os-content-frame os-contact-frame"><header className="os-app-header">
         <div>
           <p className="os-eyebrow">Start a conversation</p>
           <h1 id="os-contact-title">Contact</h1>
@@ -215,7 +215,7 @@ export default function ContactApp() {
             {feedback.message}
           </p>
         </div>
-      </form>
+      </form></div>
     </section>
   );
 }

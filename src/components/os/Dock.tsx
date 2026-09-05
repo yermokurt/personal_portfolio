@@ -12,7 +12,7 @@ const desktopEntries: DockEntry[] = [
   { label: "About", app: "about", Icon: Info },
   { label: "Experience", app: "experience", Icon: Network },
   { label: "Tech Explorer", app: "tech", Icon: Code2 },
-  { label: "Playground", href: "/playground", Icon: FlaskConical },
+  { label: "Playground", app: "playground", Icon: FlaskConical },
   { label: "Contact", app: "contact", Icon: Mail },
   { label: "Browser", app: "browser", Icon: Globe2 },
 ];
